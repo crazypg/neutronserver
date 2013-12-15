@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+  <properties resource="com/neutron/server/persistence/database.properties" />  
+
   <typeAliases> 
         <typeAlias alias="T_system" type="com.neutron.server.persistence.model.T_system"/> 
   </typeAliases> 
@@ -11,10 +14,10 @@
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/neutron?autoReconnect=true"/>
-        <property name="username" value="neutron"/>
-        <property name="password" value="neutronstar"/>
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
       </dataSource>
     </environment>
   </environments>

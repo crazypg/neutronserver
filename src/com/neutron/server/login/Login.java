@@ -47,6 +47,8 @@ public class Login extends HttpServlet {
 		     response.getWriter().println(tu.gettUserBirth());
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+	        session.close();
 		}
 	}
 
