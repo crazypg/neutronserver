@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases> 
+        <typeAlias alias="T_system" type="com.neutron.server.persistence.model.T_system"/> 
+  </typeAliases> 
+    
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/neutron?autoReconnect=true"/>
+        <property name="username" value="neutron"/>
+        <property name="password" value="neutronstar"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <mappers>      
+      <mapper resource="com/neutron/server/persistence/model/T_system.xml"/>
+      <mapper resource="com/neutron/server/persistence/mapper/T_userMapper.xml"/>
+      <mapper resource="com/neutron/server/persistence/mapper/T_relationMapper.xml"/>
+  </mappers>
+    
+</configuration>

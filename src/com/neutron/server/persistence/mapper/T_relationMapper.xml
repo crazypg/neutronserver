@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neutron.server.persistence.iface.T_relationMapper" >
+  <resultMap id="BaseResultMap" type="com.neutron.server.persistence.model.T_relation" >
+    <id column="T_RELATION_id" property="tRelationId" jdbcType="INTEGER" />
+    <result column="T_RELATION_master_id" property="tRelationMasterId" jdbcType="INTEGER" />
+    <result column="T_RELATION_salve_id" property="tRelationSalveId" jdbcType="INTEGER" />
+    <result column="T_RELATION_relation" property="tRelationRelation" jdbcType="INTEGER" />
+    <result column="T_RELATION_deltag" property="tRelationDeltag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    T_RELATION_id, T_RELATION_master_id, T_RELATION_salve_id, T_RELATION_relation, T_RELATION_deltag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_relation
+    where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_relation
+    where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neutron.server.persistence.model.T_relation" >
+    insert into t_relation (T_RELATION_id, T_RELATION_master_id, T_RELATION_salve_id, 
+      T_RELATION_relation, T_RELATION_deltag)
+    values (#{tRelationId,jdbcType=INTEGER}, #{tRelationMasterId,jdbcType=INTEGER}, #{tRelationSalveId,jdbcType=INTEGER}, 
+      #{tRelationRelation,jdbcType=INTEGER}, #{tRelationDeltag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_relation" >
+    insert into t_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tRelationId != null" >
+        T_RELATION_id,
+      </if>
+      <if test="tRelationMasterId != null" >
+        T_RELATION_master_id,
+      </if>
+      <if test="tRelationSalveId != null" >
+        T_RELATION_salve_id,
+      </if>
+      <if test="tRelationRelation != null" >
+        T_RELATION_relation,
+      </if>
+      <if test="tRelationDeltag != null" >
+        T_RELATION_deltag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tRelationId != null" >
+        #{tRelationId,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationMasterId != null" >
+        #{tRelationMasterId,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationSalveId != null" >
+        #{tRelationSalveId,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationRelation != null" >
+        #{tRelationRelation,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationDeltag != null" >
+        #{tRelationDeltag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neutron.server.persistence.model.T_relation" >
+    update t_relation
+    <set >
+      <if test="tRelationMasterId != null" >
+        T_RELATION_master_id = #{tRelationMasterId,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationSalveId != null" >
+        T_RELATION_salve_id = #{tRelationSalveId,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationRelation != null" >
+        T_RELATION_relation = #{tRelationRelation,jdbcType=INTEGER},
+      </if>
+      <if test="tRelationDeltag != null" >
+        T_RELATION_deltag = #{tRelationDeltag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neutron.server.persistence.model.T_relation" >
+    update t_relation
+    set T_RELATION_master_id = #{tRelationMasterId,jdbcType=INTEGER},
+      T_RELATION_salve_id = #{tRelationSalveId,jdbcType=INTEGER},
+      T_RELATION_relation = #{tRelationRelation,jdbcType=INTEGER},
+      T_RELATION_deltag = #{tRelationDeltag,jdbcType=VARCHAR}
+    where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
+  </update>
+</mapper>

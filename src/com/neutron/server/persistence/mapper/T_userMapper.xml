@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neutron.server.persistence.iface.T_userMapper" >
+  <resultMap id="BaseResultMap" type="com.neutron.server.persistence.model.T_user" >
+    <id column="T_USER_id" property="tUserId" jdbcType="INTEGER" />
+    <result column="T_USER_regtag" property="tUserRegtag" jdbcType="INTEGER" />
+    <result column="T_USER_avatar" property="tUserAvatar" jdbcType="VARCHAR" />
+    <result column="T_USER_name" property="tUserName" jdbcType="VARCHAR" />
+    <result column="T_USER_gender" property="tUserGender" jdbcType="INTEGER" />
+    <result column="T_USER_birth" property="tUserBirth" jdbcType="VARCHAR" />
+    <result column="T_USER_phonenumber" property="tUserPhonenumber" jdbcType="VARCHAR" />
+    <result column="T_USER_passcode" property="tUserPasscode" jdbcType="VARCHAR" />
+    <result column="T_USER_areacode" property="tUserAreacode" jdbcType="VARCHAR" />
+    <result column="T_USER_deltag" property="tUserDeltag" jdbcType="VARCHAR" />
+    <result column="T_USER_regdate" property="tUserRegdate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    T_USER_id, T_USER_regtag, T_USER_avatar, T_USER_name, T_USER_gender, T_USER_birth, 
+    T_USER_phonenumber, T_USER_passcode, T_USER_areacode, T_USER_deltag, T_USER_regdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neutron.server.persistence.model.T_user" >
+    insert into t_user (T_USER_id, T_USER_regtag, T_USER_avatar, 
+      T_USER_name, T_USER_gender, T_USER_birth, 
+      T_USER_phonenumber, T_USER_passcode, T_USER_areacode, 
+      T_USER_deltag, T_USER_regdate)
+    values (#{tUserId,jdbcType=INTEGER}, #{tUserRegtag,jdbcType=INTEGER}, #{tUserAvatar,jdbcType=VARCHAR}, 
+      #{tUserName,jdbcType=VARCHAR}, #{tUserGender,jdbcType=INTEGER}, #{tUserBirth,jdbcType=VARCHAR}, 
+      #{tUserPhonenumber,jdbcType=VARCHAR}, #{tUserPasscode,jdbcType=VARCHAR}, #{tUserAreacode,jdbcType=VARCHAR}, 
+      #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_user" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tUserId != null" >
+        T_USER_id,
+      </if>
+      <if test="tUserRegtag != null" >
+        T_USER_regtag,
+      </if>
+      <if test="tUserAvatar != null" >
+        T_USER_avatar,
+      </if>
+      <if test="tUserName != null" >
+        T_USER_name,
+      </if>
+      <if test="tUserGender != null" >
+        T_USER_gender,
+      </if>
+      <if test="tUserBirth != null" >
+        T_USER_birth,
+      </if>
+      <if test="tUserPhonenumber != null" >
+        T_USER_phonenumber,
+      </if>
+      <if test="tUserPasscode != null" >
+        T_USER_passcode,
+      </if>
+      <if test="tUserAreacode != null" >
+        T_USER_areacode,
+      </if>
+      <if test="tUserDeltag != null" >
+        T_USER_deltag,
+      </if>
+      <if test="tUserRegdate != null" >
+        T_USER_regdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tUserId != null" >
+        #{tUserId,jdbcType=INTEGER},
+      </if>
+      <if test="tUserRegtag != null" >
+        #{tUserRegtag,jdbcType=INTEGER},
+      </if>
+      <if test="tUserAvatar != null" >
+        #{tUserAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserName != null" >
+        #{tUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserGender != null" >
+        #{tUserGender,jdbcType=INTEGER},
+      </if>
+      <if test="tUserBirth != null" >
+        #{tUserBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserPhonenumber != null" >
+        #{tUserPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserPasscode != null" >
+        #{tUserPasscode,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserAreacode != null" >
+        #{tUserAreacode,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserDeltag != null" >
+        #{tUserDeltag,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserRegdate != null" >
+        #{tUserRegdate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neutron.server.persistence.model.T_user" >
+    update t_user
+    <set >
+      <if test="tUserRegtag != null" >
+        T_USER_regtag = #{tUserRegtag,jdbcType=INTEGER},
+      </if>
+      <if test="tUserAvatar != null" >
+        T_USER_avatar = #{tUserAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserName != null" >
+        T_USER_name = #{tUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserGender != null" >
+        T_USER_gender = #{tUserGender,jdbcType=INTEGER},
+      </if>
+      <if test="tUserBirth != null" >
+        T_USER_birth = #{tUserBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserPhonenumber != null" >
+        T_USER_phonenumber = #{tUserPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserPasscode != null" >
+        T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserAreacode != null" >
+        T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserDeltag != null" >
+        T_USER_deltag = #{tUserDeltag,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserRegdate != null" >
+        T_USER_regdate = #{tUserRegdate,jdbcType=DATE},
+      </if>
+    </set>
+    where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neutron.server.persistence.model.T_user" >
+    update t_user
+    set T_USER_regtag = #{tUserRegtag,jdbcType=INTEGER},
+      T_USER_avatar = #{tUserAvatar,jdbcType=VARCHAR},
+      T_USER_name = #{tUserName,jdbcType=VARCHAR},
+      T_USER_gender = #{tUserGender,jdbcType=INTEGER},
+      T_USER_birth = #{tUserBirth,jdbcType=VARCHAR},
+      T_USER_phonenumber = #{tUserPhonenumber,jdbcType=VARCHAR},
+      T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
+      T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
+      T_USER_deltag = #{tUserDeltag,jdbcType=VARCHAR},
+      T_USER_regdate = #{tUserRegdate,jdbcType=DATE}
+    where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </update>
+</mapper>
