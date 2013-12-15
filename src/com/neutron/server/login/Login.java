@@ -42,6 +42,9 @@ public class Login extends HttpServlet {
 		     T_user tu = ui.selectByPrimaryKey(1);
 		     response.getWriter().println(tu.gettUserName());
 		     response.getWriter().println(tu.gettUserBirth());
+		     tu = ui.selectByPrimaryKey(2);
+		     response.getWriter().println(tu.gettUserName());
+		     response.getWriter().println(tu.gettUserBirth());
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
