@@ -1,9 +1,15 @@
 package com.neutron.server.persistence.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class T_user {
-    private Integer tUserId;
+public class T_user implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7204489757984372709L;
+
+	private Integer tUserId;
 
     private Integer tUserRegtag;
 

@@ -1,7 +1,14 @@
 package com.neutron.server.persistence.model;
 
-public class T_relation {
-    private Integer tRelationId;
+import java.io.Serializable;
+
+public class T_relation implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1168112958458106822L;
+
+	private Integer tRelationId;
 
     private Integer tRelationMasterId;
 

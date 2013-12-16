@@ -1,0 +1,81 @@
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import com.neutron.server.persistence.model.T_user;
+
+
+public class test {
+
+	@SuppressWarnings("unchecked")
+	public static void main(String[] args) {
+		try {
+			URL postUrl;
+			postUrl = new URL("http://localhost:8080/NeutronServer/login");
+			HttpURLConnection urlConn = (HttpURLConnection) postUrl.openConnection();  
+			
+			urlConn.setDoOutput(true);  
+	        urlConn.setDoInput(true);  
+	        urlConn.setUseCaches(false);  
+	        urlConn.setRequestProperty("Content-type","application/x-java-serialized-object");  
+	        urlConn.setRequestMethod("POST");  
+	        urlConn.connect();  
+	        
+	        OutputStream outStrm = urlConn.getOutputStream();  
+	        ObjectOutputStream oos = new ObjectOutputStream(outStrm);  
+	  
+	        T_user user = new T_user();  
+//	        user.settUserRegtag(0);
+//	        user.settUserName("赵本山");
+	        
+	        user.settUserId(3);
+	        
+			ArrayList<Serializable> paraList = new ArrayList<Serializable>();
+	        paraList.add("query");
+	        paraList.add(user);
+	        
+	        oos.writeObject(paraList);  
+	        oos.flush();  
+	        oos.close();  
+	  
+	        //接收
+	        InputStream inStrm = urlConn.getInputStream(); 
+	        ObjectInputStream ois = new ObjectInputStream(inStrm);  
+	        paraList = (ArrayList<Serializable>)ois.readObject();
+	        String isSucceed = (String)paraList.get(0);
+//	        int returnValue = (Integer)paraList.get(1);
+	        //only for query
+	        user = (T_user)paraList.get(1);
+	        
+//	        System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
+	        //only for query
+	        System.out.println("isSucceed="+isSucceed);
+	        System.out.println(user.gettUserName());
+	        
+//	        System.out.println("接收前num:"+user.gettUserPhonenumber());
+//	        
+//	        ObjectInputStream ois = new ObjectInputStream(inStrm);  
+//	        user = (T_user)(ois.readObject());  
+//	        ois.close();
+//            urlConn.disconnect();
+//            
+//	        System.out.println("接收后num:"+user.gettUserPhonenumber());  
+	        
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

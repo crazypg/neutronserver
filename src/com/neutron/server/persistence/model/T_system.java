@@ -1,7 +1,13 @@
 package com.neutron.server.persistence.model;
 
-public class T_system {
+import java.io.Serializable;
 
+public class T_system implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2815584199502414331L;
 	private int T_SYSTEM_id;
 	private String T_SYSTEM_name;
 	private String T_SYSTEM_value;
