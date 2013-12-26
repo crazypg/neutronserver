@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class T_user implements Serializable{
-	
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -7204489757984372709L;
+	private static final long serialVersionUID = -5940415710440299906L;
 
 	private Integer tUserId;
 
@@ -25,6 +24,8 @@ public class T_user implements Serializable{
     private String tUserPhonenumber;
 
     private String tUserPasscode;
+
+    private Date tUserPasscodeTimestamp;
 
     private String tUserAreacode;
 
@@ -98,6 +99,14 @@ public class T_user implements Serializable{
 
     public void settUserPasscode(String tUserPasscode) {
         this.tUserPasscode = tUserPasscode == null ? null : tUserPasscode.trim();
+    }
+
+    public Date gettUserPasscodeTimestamp() {
+        return tUserPasscodeTimestamp;
+    }
+
+    public void settUserPasscodeTimestamp(Date tUserPasscodeTimestamp) {
+        this.tUserPasscodeTimestamp = tUserPasscodeTimestamp;
     }
 
     public String gettUserAreacode() {

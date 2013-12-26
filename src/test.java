@@ -18,8 +18,8 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-//		postUrl = new URL("http://localhost:8080/NeutronServer/login");
-		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
+		postUrl = new URL("http://localhost:8080/NeutronServer/login");
+//		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
 		
 		HttpURLConnection urlConn = (HttpURLConnection) postUrl.openConnection();  
@@ -38,7 +38,7 @@ public class test {
 //	    user.settUserRegtag(0);
 //	    user.settUserName("赵本山");
 	    
-	    user.settUserId(1);
+	    user.settUserId(2);
 	    
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
 	    paraList.add("query");

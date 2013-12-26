@@ -40,7 +40,6 @@ public class Login extends HttpServlet {
 //		System.out.println(request.getParameter("param"));
 //		response.getOutputStream().println("OK");
 		
-		
 		response.setContentType("text/html;charset=UTF-8"); 
 		response.getWriter().println("doGet");
 		

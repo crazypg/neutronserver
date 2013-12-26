@@ -10,6 +10,7 @@
     <result column="T_USER_birth" property="tUserBirth" jdbcType="VARCHAR" />
     <result column="T_USER_phonenumber" property="tUserPhonenumber" jdbcType="VARCHAR" />
     <result column="T_USER_passcode" property="tUserPasscode" jdbcType="VARCHAR" />
+    <result column="t_user_passcode_timestamp" property="tUserPasscodeTimestamp" jdbcType="TIMESTAMP" />
     <result column="T_USER_areacode" property="tUserAreacode" jdbcType="VARCHAR" />
     <result column="T_USER_deltag" property="tUserDeltag" jdbcType="VARCHAR" />
     <result column="T_USER_regdate" property="tUserRegdate" jdbcType="DATE" />
@@ -18,8 +19,8 @@
   </resultMap>
   <sql id="Base_Column_List" >
     T_USER_id, T_USER_regtag, T_USER_avatar, T_USER_name, T_USER_gender, T_USER_birth, 
-    T_USER_phonenumber, T_USER_passcode, T_USER_areacode, T_USER_deltag, T_USER_regdate, 
-    t_user_imei, t_user_imsi
+    T_USER_phonenumber, T_USER_passcode, t_user_passcode_timestamp, T_USER_areacode, 
+    T_USER_deltag, T_USER_regdate, t_user_imei, t_user_imsi
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -34,14 +35,14 @@
   <insert id="insert" parameterType="com.neutron.server.persistence.model.T_user" >
     insert into t_user (T_USER_id, T_USER_regtag, T_USER_avatar, 
       T_USER_name, T_USER_gender, T_USER_birth, 
-      T_USER_phonenumber, T_USER_passcode, T_USER_areacode, 
-      T_USER_deltag, T_USER_regdate, t_user_imei, 
-      t_user_imsi)
+      T_USER_phonenumber, T_USER_passcode, t_user_passcode_timestamp, 
+      T_USER_areacode, T_USER_deltag, T_USER_regdate, 
+      t_user_imei, t_user_imsi)
     values (#{tUserId,jdbcType=INTEGER}, #{tUserRegtag,jdbcType=INTEGER}, #{tUserAvatar,jdbcType=VARCHAR}, 
       #{tUserName,jdbcType=VARCHAR}, #{tUserGender,jdbcType=INTEGER}, #{tUserBirth,jdbcType=VARCHAR}, 
-      #{tUserPhonenumber,jdbcType=VARCHAR}, #{tUserPasscode,jdbcType=VARCHAR}, #{tUserAreacode,jdbcType=VARCHAR}, 
-      #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE}, #{tUserImei,jdbcType=VARCHAR}, 
-      #{tUserImsi,jdbcType=VARCHAR})
+      #{tUserPhonenumber,jdbcType=VARCHAR}, #{tUserPasscode,jdbcType=VARCHAR}, #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP}, 
+      #{tUserAreacode,jdbcType=VARCHAR}, #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE}, 
+      #{tUserImei,jdbcType=VARCHAR}, #{tUserImsi,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_user" >
     insert into t_user
@@ -69,6 +70,9 @@
       </if>
       <if test="tUserPasscode != null" >
         T_USER_passcode,
+      </if>
+      <if test="tUserPasscodeTimestamp != null" >
+        t_user_passcode_timestamp,
       </if>
       <if test="tUserAreacode != null" >
         T_USER_areacode,
@@ -111,6 +115,9 @@
       <if test="tUserPasscode != null" >
         #{tUserPasscode,jdbcType=VARCHAR},
       </if>
+      <if test="tUserPasscodeTimestamp != null" >
+        #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      </if>
       <if test="tUserAreacode != null" >
         #{tUserAreacode,jdbcType=VARCHAR},
       </if>
@@ -152,6 +159,9 @@
       <if test="tUserPasscode != null" >
         T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
       </if>
+      <if test="tUserPasscodeTimestamp != null" >
+        t_user_passcode_timestamp = #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      </if>
       <if test="tUserAreacode != null" >
         T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
       </if>
@@ -179,6 +189,7 @@
       T_USER_birth = #{tUserBirth,jdbcType=VARCHAR},
       T_USER_phonenumber = #{tUserPhonenumber,jdbcType=VARCHAR},
       T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
+      t_user_passcode_timestamp = #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
       T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
       T_USER_deltag = #{tUserDeltag,jdbcType=VARCHAR},
       T_USER_regdate = #{tUserRegdate,jdbcType=DATE},

@@ -19,7 +19,7 @@
   
     <!-- 数据库连接 -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://172.20.8.183:3306/neutron?autoReconnect=true"
+        connectionURL="jdbc:mysql://localhost:3306/neutron?autoReconnect=true"
         userId="neutron"
         password="neutronstar">
     </jdbcConnection>
