@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class T_user implements Serializable{
+	
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -7204489757984372709L;
+	private static final long serialVersionUID = -8269012822110485031L;
 
 	private Integer tUserId;
 
@@ -30,6 +31,10 @@ public class T_user implements Serializable{
     private String tUserDeltag;
 
     private Date tUserRegdate;
+
+    private String tUserImei;
+
+    private String tUserImsi;
 
     public Integer gettUserId() {
         return tUserId;
@@ -117,5 +122,21 @@ public class T_user implements Serializable{
 
     public void settUserRegdate(Date tUserRegdate) {
         this.tUserRegdate = tUserRegdate;
+    }
+
+    public String gettUserImei() {
+        return tUserImei;
+    }
+
+    public void settUserImei(String tUserImei) {
+        this.tUserImei = tUserImei == null ? null : tUserImei.trim();
+    }
+
+    public String gettUserImsi() {
+        return tUserImsi;
+    }
+
+    public void settUserImsi(String tUserImsi) {
+        this.tUserImsi = tUserImsi == null ? null : tUserImsi.trim();
     }
 }

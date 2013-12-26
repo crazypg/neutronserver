@@ -19,7 +19,7 @@
   
     <!-- 数据库连接 -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://localhost:3306/neutron?autoReconnect=true"
+        connectionURL="jdbc:mysql://172.20.8.183:3306/neutron?autoReconnect=true"
         userId="neutron"
         password="neutronstar">
     </jdbcConnection>
@@ -45,10 +45,10 @@
     </javaClientGenerator>
     
     <!-- 要对那些数据表进行生成操作，必须要有一个. -->
-    <table schema="neutron" tableName="T_RELATION" domainObjectName="T_relation" 
+    <table schema="neutron" tableName="t_user" domainObjectName="T_user" 
         enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false">     
+        selectByExampleQueryId="false">
     </table>
 
   </context>

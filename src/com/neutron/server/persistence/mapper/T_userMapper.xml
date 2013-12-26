@@ -13,10 +13,13 @@
     <result column="T_USER_areacode" property="tUserAreacode" jdbcType="VARCHAR" />
     <result column="T_USER_deltag" property="tUserDeltag" jdbcType="VARCHAR" />
     <result column="T_USER_regdate" property="tUserRegdate" jdbcType="DATE" />
+    <result column="t_user_imei" property="tUserImei" jdbcType="VARCHAR" />
+    <result column="t_user_imsi" property="tUserImsi" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     T_USER_id, T_USER_regtag, T_USER_avatar, T_USER_name, T_USER_gender, T_USER_birth, 
-    T_USER_phonenumber, T_USER_passcode, T_USER_areacode, T_USER_deltag, T_USER_regdate
+    T_USER_phonenumber, T_USER_passcode, T_USER_areacode, T_USER_deltag, T_USER_regdate, 
+    t_user_imei, t_user_imsi
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,11 +35,13 @@
     insert into t_user (T_USER_id, T_USER_regtag, T_USER_avatar, 
       T_USER_name, T_USER_gender, T_USER_birth, 
       T_USER_phonenumber, T_USER_passcode, T_USER_areacode, 
-      T_USER_deltag, T_USER_regdate)
+      T_USER_deltag, T_USER_regdate, t_user_imei, 
+      t_user_imsi)
     values (#{tUserId,jdbcType=INTEGER}, #{tUserRegtag,jdbcType=INTEGER}, #{tUserAvatar,jdbcType=VARCHAR}, 
       #{tUserName,jdbcType=VARCHAR}, #{tUserGender,jdbcType=INTEGER}, #{tUserBirth,jdbcType=VARCHAR}, 
       #{tUserPhonenumber,jdbcType=VARCHAR}, #{tUserPasscode,jdbcType=VARCHAR}, #{tUserAreacode,jdbcType=VARCHAR}, 
-      #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE})
+      #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE}, #{tUserImei,jdbcType=VARCHAR}, 
+      #{tUserImsi,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_user" >
     insert into t_user
@@ -74,6 +79,12 @@
       <if test="tUserRegdate != null" >
         T_USER_regdate,
       </if>
+      <if test="tUserImei != null" >
+        t_user_imei,
+      </if>
+      <if test="tUserImsi != null" >
+        t_user_imsi,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tUserId != null" >
@@ -108,6 +119,12 @@
       </if>
       <if test="tUserRegdate != null" >
         #{tUserRegdate,jdbcType=DATE},
+      </if>
+      <if test="tUserImei != null" >
+        #{tUserImei,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserImsi != null" >
+        #{tUserImsi,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -144,6 +161,12 @@
       <if test="tUserRegdate != null" >
         T_USER_regdate = #{tUserRegdate,jdbcType=DATE},
       </if>
+      <if test="tUserImei != null" >
+        t_user_imei = #{tUserImei,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserImsi != null" >
+        t_user_imsi = #{tUserImsi,jdbcType=VARCHAR},
+      </if>
     </set>
     where T_USER_id = #{tUserId,jdbcType=INTEGER}
   </update>
@@ -158,7 +181,9 @@
       T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
       T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
       T_USER_deltag = #{tUserDeltag,jdbcType=VARCHAR},
-      T_USER_regdate = #{tUserRegdate,jdbcType=DATE}
+      T_USER_regdate = #{tUserRegdate,jdbcType=DATE},
+      t_user_imei = #{tUserImei,jdbcType=VARCHAR},
+      t_user_imsi = #{tUserImsi,jdbcType=VARCHAR}
     where T_USER_id = #{tUserId,jdbcType=INTEGER}
   </update>
 </mapper>
