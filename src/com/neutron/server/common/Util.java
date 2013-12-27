@@ -7,12 +7,12 @@ public class Util {
 
 	private static Properties props;
 	
-	public static Properties getProper() {
+	public static Properties getProper(String pName) {
 		try {
 			if(props==null){
 				props = new Properties();
 			}
-			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\properties\\database.properties");
+			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\properties\\"+pName);
 			props.load(fis);
 			return props;
 		} catch (Exception e) {

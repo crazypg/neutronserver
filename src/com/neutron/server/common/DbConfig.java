@@ -44,7 +44,9 @@ public class DbConfig {
 			
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = (Connection) DriverManager.
-				getConnection(Util.getProper().getProperty("url"),Util.getProper().getProperty("username"),Util.getProper().getProperty("password"));
+				getConnection(Util.getProper("datebase.properties").getProperty("url"),
+						Util.getProper("datebase.properties").getProperty("username"),
+						Util.getProper("datebase.properties").getProperty("password"));
 			
 			String sql = "select count(*)  from neutron.T_USER";
 			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -69,6 +71,9 @@ public class DbConfig {
 //		Logger log=Logger.getLogger(DbConfig.class);
 //        log.info("测试");
         
+		
+		System.exit(0);
+		
 		 dbTest();
 		 
 		 getSqlSessionFactroy();

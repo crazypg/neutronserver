@@ -8,7 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
+import org.apache.naming.java.javaURLContextFactory;
+
+import com.neutron.server.common.Util;
 import com.neutron.server.persistence.model.T_user;
 
 
@@ -18,7 +22,7 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-		postUrl = new URL("http://localhost:8080/NeutronServer/login");
+		postUrl = new URL("http://localhost:8080/NeutronServer/getpasscode");
 //		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
 		
@@ -38,10 +42,10 @@ public class test {
 //	    user.settUserRegtag(0);
 //	    user.settUserName("赵本山");
 	    
-	    user.settUserId(2);
+	    user.settUserId(1);
 	    
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
-	    paraList.add("query");
+	    paraList.add("getpasscode");
 	    paraList.add(user);
 	    
 	    oos.writeObject(paraList);  
@@ -58,9 +62,12 @@ public class test {
 	    user = (T_user)paraList.get(1);
 	    
 //	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
+	    System.out.println(user.gettUserPasscode());
+	    System.out.println(user.gettUserPasscodeTimestamp());
+	    
 	    //only for query
-	    System.out.println("isSucceed="+isSucceed);
-	    System.out.println(user==null?"没有这个用户":user.gettUserName());
+//	    System.out.println("isSucceed="+isSucceed);
+//	    System.out.println(user==null?"没有这个用户":user.gettUserName());
 	    
 //	    System.out.println("接收前num:"+user.gettUserPhonenumber());
 //	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
@@ -82,6 +89,14 @@ public class test {
 	
 	public static void main(String[] args) {
 		testCommunicate();
+		
+//		System.out.println(Util.getProper("sys_config.properties").getProperty("foo"));
+		
+		
+//		Date date = new Date();
+//		System.out.println(date);
+//		System.out.println(new java.sql.Timestamp(date.getTime()));
+		
 	}
 
 }
