@@ -13,6 +13,9 @@ neutron的server端
    返回：ArrayList类型
          位置0为操作结果，ok 或者 error
          位置1为返回值，add,delete,update的返回值为sql执行返回值，一般无意义；query返回值为T_user对象，无为null
+         
+         
+         
 2、[ip]/getpasscode : 提供获取passcode服务
    描述：获取用户的passcode。60分钟内passcode不变，过期重新生成。
    输入：ArrayList类型
