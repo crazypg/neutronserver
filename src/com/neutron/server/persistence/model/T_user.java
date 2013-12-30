@@ -1,7 +1,6 @@
 package com.neutron.server.persistence.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class T_user implements Serializable{
@@ -26,7 +25,7 @@ public class T_user implements Serializable{
 
     private String tUserPasscode;
 
-    private Timestamp tUserPasscodeTimestamp;
+    private Date tUserPasscodeTimestamp;
 
     private String tUserAreacode;
 
@@ -102,11 +101,11 @@ public class T_user implements Serializable{
         this.tUserPasscode = tUserPasscode == null ? null : tUserPasscode.trim();
     }
 
-    public Timestamp gettUserPasscodeTimestamp() {
+    public Date gettUserPasscodeTimestamp() {
         return tUserPasscodeTimestamp;
     }
 
-    public void settUserPasscodeTimestamp(Timestamp tUserPasscodeTimestamp) {
+    public void settUserPasscodeTimestamp(Date tUserPasscodeTimestamp) {
         this.tUserPasscodeTimestamp = tUserPasscodeTimestamp;
     }
 

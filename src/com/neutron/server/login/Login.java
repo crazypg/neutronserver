@@ -65,8 +65,6 @@ public class Login extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-System.out.println("doPost");  
-
 		response.setContentType("text/html;charset=UTF-8"); 
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
           

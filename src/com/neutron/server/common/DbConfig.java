@@ -2,10 +2,6 @@ package com.neutron.server.common;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -39,32 +35,31 @@ public class DbConfig {
 	}
 	
 	
-	private static void dbTest() {
-		try {
-			
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = (Connection) DriverManager.
-				getConnection(Util.getProper("datebase.properties").getProperty("url"),
-						Util.getProper("datebase.properties").getProperty("username"),
-						Util.getProper("datebase.properties").getProperty("password"));
-			
-			String sql = "select count(*)  from neutron.T_USER";
-			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				System.out.println(rs.getString("count(*)"));
-			}
-
-			ps.close();
-			rs.close();
-			conn.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
+//	private static void dbTest() {
+//		try {
+//			
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection conn = (Connection) DriverManager.
+//				getConnection(Util.getProper("datebase.properties").getProperty("url"),
+//						Util.getProper("datebase.properties").getProperty("username"),
+//						Util.getProper("datebase.properties").getProperty("password"));
+//			
+//			String sql = "select count(*)  from neutron.T_USER";
+//			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+//			ResultSet rs = ps.executeQuery();
+//
+//			while (rs.next()) {
+//				System.out.println(rs.getString("count(*)"));
+//			}
+//
+//			ps.close();
+//			rs.close();
+//			conn.close();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public static void main(String[] args) {
 //		PropertyConfigurator.configure(System.getProperty("user.dir")+"\\src\\com\\neutron\\server\\log4j.xml");
@@ -72,9 +67,9 @@ public class DbConfig {
 //        log.info("测试");
         
 		
-		System.exit(0);
+//		System.exit(0);
 		
-		 dbTest();
+//		 dbTest();
 		 
 		 getSqlSessionFactroy();
 		 

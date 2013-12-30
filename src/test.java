@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import org.apache.naming.java.javaURLContextFactory;
 
@@ -22,7 +23,8 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-		postUrl = new URL("http://localhost:8080/NeutronServer/getpasscode");
+		postUrl = new URL("http://localhost:8080/NeutronServer/passcode");
+//		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/getpasscode");
 //		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
 		
@@ -42,7 +44,9 @@ public class test {
 //	    user.settUserRegtag(0);
 //	    user.settUserName("赵本山");
 	    
-	    user.settUserId(1);
+//	    user.settUserId(1);
+	    user.settUserPhonenumber("18910011001");;
+	    user.settUserAreacode("+86");;
 	    
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
 	    paraList.add("getpasscode");
@@ -60,6 +64,8 @@ public class test {
 //	    int returnValue = (Integer)paraList.get(1);
 	    //only for query
 	    user = (T_user)paraList.get(1);
+	    
+	    System.out.println(user.gettUserName());
 	    
 //	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
 	    System.out.println(user.gettUserPasscode());
@@ -86,12 +92,10 @@ public class test {
 	}
 
 	
-	
 	public static void main(String[] args) {
 		testCommunicate();
 		
 //		System.out.println(Util.getProper("sys_config.properties").getProperty("foo"));
-		
 		
 //		Date date = new Date();
 //		System.out.println(date);

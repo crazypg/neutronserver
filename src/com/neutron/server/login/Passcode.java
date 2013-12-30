@@ -18,20 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 
 import com.neutron.server.common.DbConfig;
+import com.neutron.server.common.Util;
 import com.neutron.server.persistence.iface.T_userMapper;
 import com.neutron.server.persistence.model.T_user;
+import com.neutron.server.persistence.model.T_userExample;
 
 /**
  * Servlet implementation class GetPasscode
  */
 @WebServlet("/GetPasscode")
-public class GetPasscode extends HttpServlet {
+public class Passcode extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPasscode() {
+    public Passcode() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,7 +52,7 @@ public class GetPasscode extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
-          
+      
         try{  
             InputStream in = request.getInputStream();  
             ObjectInputStream ois = new ObjectInputStream(in);
@@ -58,37 +60,65 @@ public class GetPasscode extends HttpServlet {
             String methodString = (String)paraList.get(0);
             T_user user = (T_user)paraList.get(1);  
             
-            Date date = new Date();
-            Timestamp ts = new Timestamp(date.getTime());
+//            Date date = new Date();
+//            Timestamp ts = new Timestamp(date.getTime());
             
           //置空，作返回值用
             paraList.clear();;
             
-//            int returnValue = -1;
             //申请sqlSession
             SqlSession session = DbConfig.getSqlSessionFactroy().openSession();
             T_userMapper ui = session.getMapper(T_userMapper.class);
+            
             //根据method参数进行操作
             if(methodString==null){
             	paraList.add("error");
-            }else if(methodString.equals("getpasscode")){
-            	paraList.add("ok");
+            }else if(methodString.equals("isvalid")){
             	user = ui.selectByPrimaryKey(user.gettUserId());
+            	if(user.gettUserPasscodeTimestamp() == null){
+            		paraList.add("novalid");
+            	}else if(user.gettUserPasscodeTimestamp().equals("")){ 
+            		paraList.add("novalid");
+            	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) >= 
+	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
+	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
+            		paraList.add("novalid");
+            	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) < 
+	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
+	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
+            		paraList.add("valid");
+            	}else {
+            		paraList.add("error");
+            	}
+            }else if(methodString.equals("getpasscode")){
+            	T_userExample tExample = new T_userExample();
+            	tExample.createCriteria().andTUserAreacodeEqualTo(user.gettUserAreacode())
+            		.andTUserPhonenumberEqualTo(user.gettUserPhonenumber());
+            	java.util.List<T_user> resultList = ui.selectByExample(tExample);
             	
-	            //may be use for first time
-	            if(user.gettUserPasscodeTimestamp() == null){
-	            	user.settUserPasscodeTimestamp(ts);
-	            	ui.updateByPrimaryKey(user);
-	            }
-	            	
-	//System.out.println(this.getClass().getClassLoader().getResource("/").getPath() );            	
-	            	
-	            if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) > 60){
-	        		user.settUserPasscodeTimestamp(ts);
-	        		ui.updateByPrimaryKey(user);
-	            }        	
-
-            	paraList.add(user); 
+            	if(resultList==null){
+            		paraList.add("noResult");
+            	}else if(resultList.size()==0){
+            		paraList.add("noResult");
+            	}else if(resultList.size()==1){
+            		paraList.add("ok");
+            		user = resultList.get(0);
+            		user.settUserPasscode(Util.genPasscode(6));
+            		paraList.add(user); 
+            	}else if(resultList.size()>1){
+            		paraList.add("moreThanOneResult");
+            	}
+            }else if(methodString.equals("login")){
+            	if(user.gettUserPhonenumber()== null || user.gettUserAreacode() == null || user.gettUserPasscode() == null){
+            		paraList.add("para Error");
+            	}else if(user.gettUserPhonenumber().equals("") || user.gettUserAreacode().equals("") || user.gettUserPasscode().equals("")){
+            		paraList.add("para Error");
+            	}else {
+            		
+            	}
+            	
+            	
+            	
             }else{
             	paraList.add("error");
             }

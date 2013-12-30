@@ -17,11 +17,84 @@
     <result column="t_user_imei" property="tUserImei" jdbcType="VARCHAR" />
     <result column="t_user_imsi" property="tUserImsi" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     T_USER_id, T_USER_regtag, T_USER_avatar, T_USER_name, T_USER_gender, T_USER_birth, 
     T_USER_phonenumber, T_USER_passcode, t_user_passcode_timestamp, T_USER_areacode, 
     T_USER_deltag, T_USER_regdate, t_user_imei, t_user_imsi
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neutron.server.persistence.model.T_userExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -31,6 +104,12 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user
     where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.neutron.server.persistence.model.T_userExample" >
+    delete from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.neutron.server.persistence.model.T_user" >
     insert into t_user (T_USER_id, T_USER_regtag, T_USER_avatar, 
@@ -135,6 +214,82 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.neutron.server.persistence.model.T_userExample" resultType="java.lang.Integer" >
+    select count(*) from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user
+    <set >
+      <if test="record.tUserId != null" >
+        T_USER_id = #{record.tUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tUserRegtag != null" >
+        T_USER_regtag = #{record.tUserRegtag,jdbcType=INTEGER},
+      </if>
+      <if test="record.tUserAvatar != null" >
+        T_USER_avatar = #{record.tUserAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserName != null" >
+        T_USER_name = #{record.tUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserGender != null" >
+        T_USER_gender = #{record.tUserGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.tUserBirth != null" >
+        T_USER_birth = #{record.tUserBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserPhonenumber != null" >
+        T_USER_phonenumber = #{record.tUserPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserPasscode != null" >
+        T_USER_passcode = #{record.tUserPasscode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserPasscodeTimestamp != null" >
+        t_user_passcode_timestamp = #{record.tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tUserAreacode != null" >
+        T_USER_areacode = #{record.tUserAreacode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserDeltag != null" >
+        T_USER_deltag = #{record.tUserDeltag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserRegdate != null" >
+        T_USER_regdate = #{record.tUserRegdate,jdbcType=DATE},
+      </if>
+      <if test="record.tUserImei != null" >
+        t_user_imei = #{record.tUserImei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tUserImsi != null" >
+        t_user_imsi = #{record.tUserImsi,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user
+    set T_USER_id = #{record.tUserId,jdbcType=INTEGER},
+      T_USER_regtag = #{record.tUserRegtag,jdbcType=INTEGER},
+      T_USER_avatar = #{record.tUserAvatar,jdbcType=VARCHAR},
+      T_USER_name = #{record.tUserName,jdbcType=VARCHAR},
+      T_USER_gender = #{record.tUserGender,jdbcType=INTEGER},
+      T_USER_birth = #{record.tUserBirth,jdbcType=VARCHAR},
+      T_USER_phonenumber = #{record.tUserPhonenumber,jdbcType=VARCHAR},
+      T_USER_passcode = #{record.tUserPasscode,jdbcType=VARCHAR},
+      t_user_passcode_timestamp = #{record.tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      T_USER_areacode = #{record.tUserAreacode,jdbcType=VARCHAR},
+      T_USER_deltag = #{record.tUserDeltag,jdbcType=VARCHAR},
+      T_USER_regdate = #{record.tUserRegdate,jdbcType=DATE},
+      t_user_imei = #{record.tUserImei,jdbcType=VARCHAR},
+      t_user_imsi = #{record.tUserImsi,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.neutron.server.persistence.model.T_user" >
     update t_user
     <set >
