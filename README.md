@@ -27,15 +27,15 @@ NeutronServer
       位置0为操作类型，分别为 isvalid,getpasscode,login   
       位置1为一个T_user 对象   
          isvalid需要非空的 userid 和 passcode
-         getpasscode需要非空的 areacode  和phonenumber
-         login需要非空的 areacode ， phonenumber 和 passcode
+         getpasscode需要非空的 areacode 和 phonenumber
+         login需要非空的 areacode , phonenumber 和 passcode
       
    返回：ArrayList类型   
    
       位置0为操作结果
          对isvalid,有 valid（验证成功）,novalid（验证不成功）,error
-         对getpasscode,有 ok,noResult,moreThanOneResult
-         对login,有 ok,para Error,noResult,moreThanOneResult
+         对getpasscode,有 ok , noResult , moreThanOneResult
+         对login,有 ok , para Error , noResult , moreThanOneResult
       位置1为返回值   
          isvalid 操作没有返回值
          getpasscode,login 返回值为 T_user 对象
