@@ -26,6 +26,9 @@ NeutronServer
    
       位置0为操作类型，分别为 isvalid,getpasscode,login   
       位置1为一个T_user 对象   
+         isvalid需要非空的 userid 和 passcode
+         getpasscode需要非空的 areacode  和phonenumber
+         login需要非空的 areacode ， phonenumber 和 passcode
       
    返回：ArrayList类型   
    
