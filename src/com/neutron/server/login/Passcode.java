@@ -60,8 +60,8 @@ public class Passcode extends HttpServlet {
             String methodString = (String)paraList.get(0);
             T_user user = (T_user)paraList.get(1);  
             
-//            Date date = new Date();
-//            Timestamp ts = new Timestamp(date.getTime());
+            Date date = new Date();
+            Timestamp ts = new Timestamp(date.getTime());
             
           //置空，作返回值用
             paraList.clear();;
@@ -113,12 +113,28 @@ public class Passcode extends HttpServlet {
             		paraList.add("para Error");
             	}else if(user.gettUserPhonenumber().equals("") || user.gettUserAreacode().equals("") || user.gettUserPasscode().equals("")){
             		paraList.add("para Error");
-            	}else {
-            		
+            	}else{
+                	T_userExample tExample = new T_userExample();
+                	tExample.createCriteria().andTUserAreacodeEqualTo(user.gettUserAreacode())
+                		.andTUserPhonenumberEqualTo(user.gettUserPhonenumber());
+                	java.util.List<T_user> resultList = ui.selectByExample(tExample);
+                	
+                	if(resultList==null){
+                		paraList.add("noResult");
+                	}else if(resultList.size()==0){
+                		paraList.add("noResult");
+                	}else if(resultList.size()==1){
+                		paraList.add("ok");
+                		String passcode = user.gettUserPasscode();
+                		user = resultList.get(0);
+                		user.settUserPasscode(passcode);
+                		user.settUserPasscodeTimestamp(ts);
+                		ui.updateByPrimaryKey(user);
+                		paraList.add(user);
+                	}else if(resultList.size()>1){
+                		paraList.add("moreThanOneResult");
+                	}
             	}
-            	
-            	
-            	
             }else{
             	paraList.add("error");
             }

@@ -23,7 +23,7 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-		postUrl = new URL("http://localhost:8080/NeutronServer/passcode");
+		postUrl = new URL("http://localhost:8080/NeutronServer/login");
 //		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/getpasscode");
 //		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
@@ -41,15 +41,15 @@ public class test {
 	    ObjectOutputStream oos = new ObjectOutputStream(outStrm);  
 
 	    T_user user = new T_user();  
-//	    user.settUserRegtag(0);
-//	    user.settUserName("赵本山");
+	    user.settUserRegtag(0);
+	    user.settUserName("李靖");
 	    
 //	    user.settUserId(1);
-	    user.settUserPhonenumber("18910011001");;
+	    user.settUserPhonenumber("18910011002");;
 	    user.settUserAreacode("+86");;
 	    
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
-	    paraList.add("getpasscode");
+	    paraList.add("add");
 	    paraList.add(user);
 	    
 	    oos.writeObject(paraList);  
@@ -61,15 +61,16 @@ public class test {
 	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
 	    paraList = (ArrayList<Serializable>)ois.readObject();
 	    String isSucceed = (String)paraList.get(0);
-//	    int returnValue = (Integer)paraList.get(1);
+	    int returnValue = (Integer)paraList.get(1);
+	    
 	    //only for query
-	    user = (T_user)paraList.get(1);
+//	    user = (T_user)paraList.get(1);
 	    
 	    System.out.println(user.gettUserName());
+	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
 	    
-//	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
-	    System.out.println(user.gettUserPasscode());
-	    System.out.println(user.gettUserPasscodeTimestamp());
+//	    System.out.println(user.gettUserPasscode());
+//	    System.out.println(user.gettUserPasscodeTimestamp());
 	    
 	    //only for query
 //	    System.out.println("isSucceed="+isSucceed);

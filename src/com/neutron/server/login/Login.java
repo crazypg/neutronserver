@@ -94,7 +94,7 @@ public class Login extends HttpServlet {
             }else if(methodString.equals("add")){
             	paraList.add("ok");
             	returnValue = ui.insert(user);
-            	paraList.add(returnValue);
+            	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
             }else if(methodString.equals("delete")){
             	paraList.add("ok");
             	//先通过主键查出该条记录

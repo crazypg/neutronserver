@@ -27,4 +27,6 @@ public interface T_userMapper {
     int updateByPrimaryKeySelective(T_user record);
 
     int updateByPrimaryKey(T_user record);
+    
+    int getLastInsertID();
 }
