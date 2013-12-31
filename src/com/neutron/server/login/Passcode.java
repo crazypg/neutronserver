@@ -80,12 +80,12 @@ public class Passcode extends HttpServlet {
             	}else if(user.gettUserPasscodeTimestamp().equals("")){ 
             		paraList.add("novalid");
             	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) >= 
-	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
-	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
+	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+	            		.getProperty("passcodetimeout"))){
             		paraList.add("novalid");
             	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) < 
-	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
-	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
+	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+	            		.getProperty("passcodetimeout"))){
             		paraList.add("valid");
             	}else {
             		paraList.add("error");

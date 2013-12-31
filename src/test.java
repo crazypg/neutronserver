@@ -23,8 +23,8 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-		postUrl = new URL("http://localhost:8080/NeutronServer/login");
-//		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/getpasscode");
+//		postUrl = new URL("http://localhost:8080/NeutronServer/login");
+		postUrl = new URL("http://219.141.181.131:12581/NeutronServer/passcode");
 //		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
 		
@@ -41,15 +41,15 @@ public class test {
 	    ObjectOutputStream oos = new ObjectOutputStream(outStrm);  
 
 	    T_user user = new T_user();  
-	    user.settUserRegtag(0);
-	    user.settUserName("李靖");
+//	    user.settUserRegtag(0);
+//	    user.settUserName("李靖");
 	    
 //	    user.settUserId(1);
-	    user.settUserPhonenumber("18910011002");;
+	    user.settUserPhonenumber("18910011001");;
 	    user.settUserAreacode("+86");;
 	    
 		ArrayList<Serializable> paraList = new ArrayList<Serializable>();
-	    paraList.add("add");
+	    paraList.add("getpasscode");
 	    paraList.add(user);
 	    
 	    oos.writeObject(paraList);  
@@ -61,13 +61,13 @@ public class test {
 	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
 	    paraList = (ArrayList<Serializable>)ois.readObject();
 	    String isSucceed = (String)paraList.get(0);
-	    int returnValue = (Integer)paraList.get(1);
+//	    int returnValue = (Integer)paraList.get(1);
 	    
 	    //only for query
-//	    user = (T_user)paraList.get(1);
+	    user = (T_user)paraList.get(1);
 	    
 	    System.out.println(user.gettUserName());
-	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
+//	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
 	    
 //	    System.out.println(user.gettUserPasscode());
 //	    System.out.println(user.gettUserPasscodeTimestamp());
@@ -75,14 +75,10 @@ public class test {
 	    //only for query
 //	    System.out.println("isSucceed="+isSucceed);
 //	    System.out.println(user==null?"没有这个用户":user.gettUserName());
-	    
-//	    System.out.println("接收前num:"+user.gettUserPhonenumber());
-//	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
-//	    user = (T_user)(ois.readObject());  
-//	    ois.close();
-//	    urlConn.disconnect();
-//	    System.out.println("接收后num:"+user.gettUserPhonenumber());  
 		    
+	    ois.close();
+	    urlConn.disconnect();
+	    
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
