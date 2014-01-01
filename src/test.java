@@ -8,12 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
 
-import org.apache.naming.java.javaURLContextFactory;
-
-import com.neutron.server.common.Util;
 import com.neutron.server.persistence.model.T_user;
 
 
@@ -23,9 +18,8 @@ public class test {
 	private static void testCommunicate(){
 		try {
 		URL postUrl;
-//		postUrl = new URL("http://localhost:8080/NeutronServer/login");
+//		postUrl = new URL("http://localhost:8080/NeutronServer/passcode");
 		postUrl = new URL("http://219.141.181.131:12581/NeutronServer/passcode");
-//		postUrl = new URL("http://172.20.8.183:12581/NeutronServer/login");
 		
 		
 		HttpURLConnection urlConn = (HttpURLConnection) postUrl.openConnection();  
@@ -45,6 +39,7 @@ public class test {
 //	    user.settUserName("李靖");
 	    
 //	    user.settUserId(1);
+//	    user.settUserPasscode("123456");
 	    user.settUserPhonenumber("18910011001");;
 	    user.settUserAreacode("+86");;
 	    
@@ -67,9 +62,10 @@ public class test {
 	    user = (T_user)paraList.get(1);
 	    
 	    System.out.println(user.gettUserName());
+	    System.out.println("isSucceed="+isSucceed);
 //	    System.out.println("isSucceed="+isSucceed+";returnValue="+returnValue);
 	    
-//	    System.out.println(user.gettUserPasscode());
+	    System.out.println(user.gettUserPasscode());
 //	    System.out.println(user.gettUserPasscodeTimestamp());
 	    
 	    //only for query
