@@ -1,5 +1,8 @@
 package com.neutron.server.login;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -42,7 +45,8 @@ public class Login extends HttpServlet {
 		
 		response.setContentType("text/html;charset=UTF-8"); 
 		response.getWriter().println("doGet::Only For TEST perpose");
-		
+		response.getWriter().println(System.getProperty("os.name"));
+				
 		SqlSession session = DbConfig.getSqlSessionFactroy().openSession();
 		
 		try{
@@ -74,6 +78,9 @@ public class Login extends HttpServlet {
             paraList = (ArrayList<Serializable>)(ois.readObject());  
             String methodString = (String)paraList.get(0);
             T_user user = (T_user)paraList.get(1);  
+            
+            File inFile=(File)paraList.get(2);
+            
           //置空，作返回值用
             paraList.clear();;
             
@@ -93,6 +100,31 @@ public class Login extends HttpServlet {
             	paraList.add("error");
             }else if(methodString.equals("add")){
             	paraList.add("ok");
+            	
+            	//***********************************************************************
+            	
+        		File outFile = new File("D:\\011525.jpg");//保存在指定路径
+        		//创建流文件读入与写出类
+        		try {
+        			FileInputStream inStream;
+        			inStream = new FileInputStream(inFile);
+        			FileOutputStream outStream = new FileOutputStream(outFile);
+        			 
+        			//通过available方法取得流的最大字符数
+        			byte[] inOutb = new byte[inStream.available()];
+        			 
+        			inStream.read(inOutb);  //读入流,保存在byte数组
+        			outStream.write(inOutb);  //写出流,保存在文件newdemo.txt中
+        			 
+        			inStream.close();
+        			outStream.close();
+        		} catch (Exception e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+            	System.exit(0);
+            	//***********************************************************************
+            	
             	returnValue = ui.insert(user);
             	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
             }else if(methodString.equals("delete")){

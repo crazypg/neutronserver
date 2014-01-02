@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -48,6 +52,14 @@ public class test {
 	    /////////////////////input//////////////////////////////////////////////////////////
 	    if(servName.equals("login")){
 	    	if(method.equals("add")){
+	    		paraList.add(method);
+	    		user.settUserName("秦琼");
+	    		user.settUserRegtag(0);
+	    		paraList.add(user);
+	    		
+	    		File picFile = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Koala.jpg");
+	    		System.out.println(picFile.isFile());
+	    		paraList.add(picFile);
 	    		
 	    	}else{
 	    		System.out.println(servName+"没有这种方法");
@@ -116,15 +128,17 @@ public class test {
 	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
 	    paraList = (ArrayList<Serializable>)ois.readObject();
 	    String isSucceed = "";
-		@SuppressWarnings("unused")
 		int returnValue = -1;
 	    
 	    System.out.println("=========="+host+"上的运行结果==========");
 	    ////////////////////////output///////////////////////////////////////////////
 	    if(servName.equals("login")){
 	    	if(method.equals("add")){
-	    		returnValue = (Integer)paraList.get(1);
-	    		
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		returnValue = (Integer)paraList.get(1);	 
+	    		System.out.println("returnValue="+returnValue);
 	    	}else if(method.equals("query")){
 	    		user = (T_user)paraList.get(1);
 	    		System.out.println(servName+"/"+method+"的执行结果：");
@@ -159,7 +173,30 @@ public class test {
 
 	
 	public static void main(String[] args) {
-		testCommunicate("219","data","upload");
+//		testCommunicate("local","login","add");
+		
+		System.out.println(System.getProperty("os.name").toLowerCase().contains("windows"));
+		
+//		File inFile = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Koala.jpg");
+//		File outFile = new File("D:\\011525.jpg");//保存在指定路径
+//		//创建流文件读入与写出类
+//		try {
+//			FileInputStream inStream;
+//			inStream = new FileInputStream(inFile);
+//			FileOutputStream outStream = new FileOutputStream(outFile);
+//			 
+//			//通过available方法取得流的最大字符数
+//			byte[] inOutb = new byte[inStream.available()];
+//			 
+//			inStream.read(inOutb);  //读入流,保存在byte数组
+//			outStream.write(inOutb);  //写出流,保存在文件newdemo.txt中
+//			 
+//			inStream.close();
+//			outStream.close();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		System.out.println(Util.getProper("sys_config.properties").getProperty("foo"));
 		

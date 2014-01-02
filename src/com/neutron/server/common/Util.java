@@ -8,8 +8,8 @@ public class Util {
 	
 	private static Properties sysprops;
 	private static String innerPath= "WEB-INF"+System.getProperty("file.separator")
-	+"classes"+System.getProperty("file.separator")
-	+"sys_config.properties";
+		+"classes"+System.getProperty("file.separator")
+		+"sys_config.properties";
 //	public static Properties getProper(String pName) {
 //		try {
 //			if(props==null){
