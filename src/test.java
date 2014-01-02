@@ -77,18 +77,22 @@ public class test {
 	    		ad.settAccdataValue(1.01);
 	    		ad.settAccdataDatatime(new Date());
 	    		uploadList.add(ad);
+	    		ad = new T_accdata();
 	    		ad.settAccdataUserid(1);
 	    		ad.settAccdataValue(1.02);
 	    		ad.settAccdataDatatime(new Date());
 	    		uploadList.add(ad);
+	    		ad = new T_accdata();
 	    		ad.settAccdataUserid(1);
 	    		ad.settAccdataValue(1.03);
 	    		ad.settAccdataDatatime(new Date());
 	    		uploadList.add(ad);
+	    		ad = new T_accdata();
 	    		ad.settAccdataUserid(1);
 	    		ad.settAccdataValue(1.04);
 	    		ad.settAccdataDatatime(new Date());
 	    		uploadList.add(ad);
+	    		ad = new T_accdata();
 	    		ad.settAccdataUserid(1);
 	    		ad.settAccdataValue(1.05);
 	    		ad.settAccdataDatatime(new Date());
@@ -112,7 +116,7 @@ public class test {
 	    ObjectInputStream ois = new ObjectInputStream(inStrm);  
 	    paraList = (ArrayList<Serializable>)ois.readObject();
 	    String isSucceed = "";
-	    @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		int returnValue = -1;
 	    
 	    System.out.println("=========="+host+"上的运行结果==========");
@@ -155,7 +159,7 @@ public class test {
 
 	
 	public static void main(String[] args) {
-		testCommunicate("local","data","upload");
+		testCommunicate("219","data","upload");
 		
 //		System.out.println(Util.getProper("sys_config.properties").getProperty("foo"));
 		

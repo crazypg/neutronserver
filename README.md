@@ -38,4 +38,18 @@ NeutronServer
          对login,有 ok , para Error , noResult , moreThanOneResult
       位置1为返回值   
          isvalid 操作没有返回值
-         getpasscode,login 返回值为 T_user 对象
+         getpasscode,login 返回值为 T_user 对象   
+         
+         
+###3、[ip]/data : 提供数据存储相关服务   
+   描述：用于client上传本机数据。   
+   输入：ArrayList类型   
+   
+      位置0为操作类型，分别为 upload
+      位置1为一个ArrayList 对象   
+         对于upload操作，该ArrayList所含元素是T_accdata，除t_accdata_id外都需要赋值
+      
+   返回：ArrayList类型   
+   
+      位置0为操作结果
+         对upload,有 ok,error

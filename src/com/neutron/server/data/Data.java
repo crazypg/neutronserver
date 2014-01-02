@@ -56,19 +56,20 @@ public class Data extends HttpServlet {
             ArrayList<T_accdata> uploadList = (ArrayList<T_accdata>)paraList.get(1);  
             
             //置空，作返回值用
-            paraList.clear();;
+            paraList.clear();
             
             //申请sqlSession
             //批量执行
             SqlSession session = DbConfig.getSqlSessionFactroy().openSession(ExecutorType.BATCH, true);
             T_accdataMapper mapper = session.getMapper(T_accdataMapper.class);
             
-            if(methodString == null){
+            if(methodString == null || uploadList == null){
             	paraList.add("error");
-            }else if(methodString.equals("")){
+            }else if(methodString.equals("") || uploadList.size()==0){
             	paraList.add("error");
             }else if(methodString.equals("upload")){
-            	paraList.add(mapper.insertBatch(uploadList));
+            	mapper.insertBatch(uploadList);
+            	paraList.add("ok");
             }else{
             	paraList.add("error");
             }

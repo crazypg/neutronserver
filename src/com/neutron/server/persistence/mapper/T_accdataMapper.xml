@@ -70,11 +70,11 @@
     t_accData_id, t_accData_userid, t_accData_value, t_accData_datatime
   </sql>
   
-  <insert id="insertBatch" >
+  <insert id="insertBatch" parameterType="java.util.List">
     insert into t_accdata ( <include refid="Base_Column_List" /> ) 
     values 
     <foreach collection="list" item="item" index="index" separator=",">
-        (null,#{item.t_accData_userid},#{item.t_accData_value},#{item.t_accData_datatime})
+        (null,#{item.tAccdataUserid},#{item.tAccdataValue},#{item.tAccdataDatatime})
     </foreach>
   </insert>
   
