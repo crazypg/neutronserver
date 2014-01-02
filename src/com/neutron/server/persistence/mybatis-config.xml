@@ -26,6 +26,7 @@
       <mapper resource="com/neutron/server/persistence/model/T_system.xml"/>
       <mapper resource="com/neutron/server/persistence/mapper/T_userMapper.xml"/>
       <mapper resource="com/neutron/server/persistence/mapper/T_relationMapper.xml"/>
+      <mapper resource="com/neutron/server/persistence/mapper/T_accdataMapper.xml"/>
   </mappers>
     
 </configuration>

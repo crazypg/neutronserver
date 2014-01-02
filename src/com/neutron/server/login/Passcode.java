@@ -76,7 +76,7 @@ public class Passcode extends HttpServlet {
             }else if(methodString.equals("isvalid")){
             	String inPasscodeString = user.gettUserPasscode();
             	user = ui.selectByPrimaryKey(user.gettUserId());
-            	if(user.gettUserPasscode() == null || inPasscodeString == null){
+            	if(user == null || user.gettUserPasscode() == null || inPasscodeString == null){
             		paraList.add("novalid");
             	}else 
 //            		if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) >= 

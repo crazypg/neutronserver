@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neutron.server.persistence.iface.T_accdataMapper" >
+  <resultMap id="BaseResultMap" type="com.neutron.server.persistence.model.T_accdata" >
+    <id column="t_accData_id" property="tAccdataId" jdbcType="INTEGER" />
+    <result column="t_accData_userid" property="tAccdataUserid" jdbcType="INTEGER" />
+    <result column="t_accData_value" property="tAccdataValue" jdbcType="DOUBLE" />
+    <result column="t_accData_datatime" property="tAccdataDatatime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    t_accData_id, t_accData_userid, t_accData_value, t_accData_datatime
+  </sql>
+  
+  <insert id="insertBatch" >
+    insert into t_accdata ( <include refid="Base_Column_List" /> ) 
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+        (null,#{item.t_accData_userid},#{item.t_accData_value},#{item.t_accData_datatime})
+    </foreach>
+  </insert>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neutron.server.persistence.model.T_accdataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_accdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_accdata
+    where t_accData_id = #{tAccdataId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_accdata
+    where t_accData_id = #{tAccdataId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.neutron.server.persistence.model.T_accdataExample" >
+    delete from t_accdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.neutron.server.persistence.model.T_accdata" >
+    insert into t_accdata (t_accData_id, t_accData_userid, t_accData_value, 
+      t_accData_datatime)
+    values (#{tAccdataId,jdbcType=INTEGER}, #{tAccdataUserid,jdbcType=INTEGER}, #{tAccdataValue,jdbcType=DOUBLE}, 
+      #{tAccdataDatatime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_accdata" >
+    insert into t_accdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tAccdataId != null" >
+        t_accData_id,
+      </if>
+      <if test="tAccdataUserid != null" >
+        t_accData_userid,
+      </if>
+      <if test="tAccdataValue != null" >
+        t_accData_value,
+      </if>
+      <if test="tAccdataDatatime != null" >
+        t_accData_datatime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tAccdataId != null" >
+        #{tAccdataId,jdbcType=INTEGER},
+      </if>
+      <if test="tAccdataUserid != null" >
+        #{tAccdataUserid,jdbcType=INTEGER},
+      </if>
+      <if test="tAccdataValue != null" >
+        #{tAccdataValue,jdbcType=DOUBLE},
+      </if>
+      <if test="tAccdataDatatime != null" >
+        #{tAccdataDatatime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.neutron.server.persistence.model.T_accdataExample" resultType="java.lang.Integer" >
+    select count(*) from t_accdata
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_accdata
+    <set >
+      <if test="record.tAccdataId != null" >
+        t_accData_id = #{record.tAccdataId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tAccdataUserid != null" >
+        t_accData_userid = #{record.tAccdataUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tAccdataValue != null" >
+        t_accData_value = #{record.tAccdataValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.tAccdataDatatime != null" >
+        t_accData_datatime = #{record.tAccdataDatatime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_accdata
+    set t_accData_id = #{record.tAccdataId,jdbcType=INTEGER},
+      t_accData_userid = #{record.tAccdataUserid,jdbcType=INTEGER},
+      t_accData_value = #{record.tAccdataValue,jdbcType=DOUBLE},
+      t_accData_datatime = #{record.tAccdataDatatime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neutron.server.persistence.model.T_accdata" >
+    update t_accdata
+    <set >
+      <if test="tAccdataUserid != null" >
+        t_accData_userid = #{tAccdataUserid,jdbcType=INTEGER},
+      </if>
+      <if test="tAccdataValue != null" >
+        t_accData_value = #{tAccdataValue,jdbcType=DOUBLE},
+      </if>
+      <if test="tAccdataDatatime != null" >
+        t_accData_datatime = #{tAccdataDatatime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where t_accData_id = #{tAccdataId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neutron.server.persistence.model.T_accdata" >
+    update t_accdata
+    set t_accData_userid = #{tAccdataUserid,jdbcType=INTEGER},
+      t_accData_value = #{tAccdataValue,jdbcType=DOUBLE},
+      t_accData_datatime = #{tAccdataDatatime,jdbcType=TIMESTAMP}
+    where t_accData_id = #{tAccdataId,jdbcType=INTEGER}
+  </update>
+</mapper>
