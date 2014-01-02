@@ -74,21 +74,20 @@ public class Passcode extends HttpServlet {
             if(methodString==null){
             	paraList.add("error");
             }else if(methodString.equals("isvalid")){
+            	String inPasscodeString = user.gettUserPasscode();
             	user = ui.selectByPrimaryKey(user.gettUserId());
-            	if(user.gettUserPasscodeTimestamp() == null){
+            	if(user.gettUserPasscode() == null || inPasscodeString == null){
             		paraList.add("novalid");
-            	}else if(user.gettUserPasscodeTimestamp().equals("")){ 
-            		paraList.add("novalid");
-            	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) >= 
-	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
-	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
-            		paraList.add("novalid");
-            	}else if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) < 
-	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath("\\")+
-	            		"WEB-INF\\classes\\sys_config.properties").getProperty("passcodetimeout"))){
+            	}else 
+//            		if(((new Timestamp(new Date().getTime()).getTime() - user.gettUserPasscodeTimestamp().getTime())/1000/60) >= 
+//	            Integer.valueOf(com.neutron.server.common.Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+//	            		.getProperty("passcodetimeout"))){
+//            		paraList.add("novalid");
+//            	}else 
+            		if(user.gettUserPasscode().equals(inPasscodeString)){
             		paraList.add("valid");
             	}else {
-            		paraList.add("error");
+            		paraList.add("novalid");
             	}
             }else if(methodString.equals("getpasscode")){
             	T_userExample tExample = new T_userExample();
@@ -97,11 +96,13 @@ public class Passcode extends HttpServlet {
             	java.util.List<T_user> resultList = ui.selectByExample(tExample);
             	
             	if(resultList==null){
-            		paraList.add("noResult");
-            	}else if(resultList.size()==0){
-            		paraList.add("noResult");
-            	}else if(resultList.size()==1){
-            		paraList.add("ok");
+            		paraList.add("error");
+            	}else if(resultList.size()==0){//新用户
+            		paraList.add("new");
+            		user.settUserPasscode(Util.genPasscode(6));
+            		paraList.add(user); 
+            	}else if(resultList.size()==1){//注册用户
+            		paraList.add("registered");
             		user = resultList.get(0);
             		user.settUserPasscode(Util.genPasscode(6));
             		paraList.add(user); 

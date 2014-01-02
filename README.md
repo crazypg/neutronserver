@@ -33,8 +33,8 @@ NeutronServer
    返回：ArrayList类型   
    
       位置0为操作结果
-         对isvalid,有 valid（验证成功）,novalid（验证不成功）,error
-         对getpasscode,有 ok , noResult , moreThanOneResult
+         对isvalid,有 valid（验证成功）,novalid（验证不成功）
+         对getpasscode,有 new , registered , moreThanOneResult
          对login,有 ok , para Error , noResult , moreThanOneResult
       位置1为返回值   
          isvalid 操作没有返回值

@@ -5,9 +5,11 @@ import java.util.Properties;
 import java.util.Random;
 
 public class Util {
-
-	private static Properties sysprops;
 	
+	private static Properties sysprops;
+	private static String innerPath= "WEB-INF"+System.getProperty("file.separator")
+	+"classes"+System.getProperty("file.separator")
+	+"sys_config.properties";
 //	public static Properties getProper(String pName) {
 //		try {
 //			if(props==null){
@@ -27,7 +29,7 @@ public class Util {
 			if(sysprops==null){
 				sysprops = new Properties();
 			}
-			FileInputStream fis = new FileInputStream(path);
+			FileInputStream fis = new FileInputStream(path+innerPath);
 			sysprops.load(fis);
 			return sysprops;
 		} catch (Exception e) {
