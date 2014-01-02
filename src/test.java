@@ -8,14 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
 
-import org.apache.naming.java.javaURLContextFactory;
-
-import com.neutron.server.common.Util;
 import com.neutron.server.persistence.model.T_user;
-
 
 public class test {
 

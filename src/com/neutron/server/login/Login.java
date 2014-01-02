@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
 //		response.getOutputStream().println("OK");
 		
 		response.setContentType("text/html;charset=UTF-8"); 
-		response.getWriter().println("doGet");
+		response.getWriter().println("doGet::Only For TEST perpose");
 		
 		SqlSession session = DbConfig.getSqlSessionFactroy().openSession();
 		
