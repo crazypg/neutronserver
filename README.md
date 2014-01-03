@@ -6,6 +6,8 @@ NeutronServer
 
 ###1、[ip]/login : 提供登陆服务
    描述：用户的注册和登陆    
+         对于头像图片类型，服务器端只是记录，不做限制；   
+         对于头像图片大小，服务器端限制最大上限，但client端
    输入：ArrayList类型   
    
       位置0为操作类型，分别有 add,delete,update,query；saveavatar,getavatar,delavatar  
@@ -29,7 +31,7 @@ NeutronServer
          getavatar:返回值为 byte[]
          saveavatar,delavatar:无返回值
       位置2为返回值2         
-         getavatar:返回值为 图片类型
+         getavatar:返回值为 String 的图片类型，如"jpg"
 
 ###2、[ip]/passcode : 提供passcode相关服务   
    描述：60分钟内passcode不变，过期重新生成。   
