@@ -8,16 +8,21 @@ NeutronServer
    描述：用户的注册和登陆    
    输入：ArrayList类型   
    
-      位置0为操作类型，分别有 add,delete,update,query；  
+      位置0为操作类型，分别有 add,delete,update,query；saveavatar,getavatar,delavatar  
       位置1为一个T_user 对象 
    
    返回：ArrayList类型   
    
-      位置0为操作结果，ok 或者 error   
+      位置0为操作结果
+         add,delete,update,query，getavatar: ok 或者 error
+         saveavatar:noUser,picTooLarge,saveOk
+         delavatar:noUser,delOk   
       位置1为返回值  
-         add的返回值为刚插入的数据项的自增ID   
-         delete,update的返回值为sql执行返回值，一般无意义；   
-         query返回值为T_user对象，无为null   
+         add:返回值为刚插入的数据项的自增ID   
+         delete,update:返回值为sql执行返回值，一般无意义；   
+         query:返回值为T_user对象，无为null   
+         getavatar:返回值为 byte[]
+         saveavatar,delavatar:无返回值
 
 
 ###2、[ip]/passcode : 提供passcode相关服务   

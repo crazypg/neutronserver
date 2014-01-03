@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 
 import com.neutron.server.common.DbConfig;
+import com.neutron.server.common.Util;
 import com.neutron.server.persistence.iface.T_userMapper;
 import com.neutron.server.persistence.model.T_user;
 
@@ -77,19 +78,22 @@ public class Login extends HttpServlet {
             ObjectInputStream ois = new ObjectInputStream(in);
             paraList = (ArrayList<Serializable>)(ois.readObject());  
             String methodString = (String)paraList.get(0);
-            T_user user = (T_user)paraList.get(1);  
             
-            File inFile=(File)paraList.get(2);
+            T_user user = (T_user)paraList.get(1);
             
+            String pathname = "";
+            byte[] long_buf = null;
+        	FileOutputStream fos=null; //for receive file
+        	String picTypeString = "";
+        	
+            if(methodString!=null && methodString.equals("saveavatar")){
+            	long_buf = (byte[])paraList.get(2);
+            	picTypeString = (String)paraList.get(3);
+            }
+            
+        	
           //置空，作返回值用
-            paraList.clear();;
-            
-//            测试用
-           /* System.out.println(methodString); 
-            System.out.println(user.gettUserName());  
-            user.settUserPhonenumber("13610100101");*/
-//          response.getWriter().println(user.gettUserName());
-//          response.getOutputStream().print("back");
+            paraList.clear();
             
             int returnValue = -1;
             //申请sqlSession
@@ -100,31 +104,6 @@ public class Login extends HttpServlet {
             	paraList.add("error");
             }else if(methodString.equals("add")){
             	paraList.add("ok");
-            	
-            	//***********************************************************************
-            	
-        		File outFile = new File("D:\\011525.jpg");//保存在指定路径
-        		//创建流文件读入与写出类
-        		try {
-        			FileInputStream inStream;
-        			inStream = new FileInputStream(inFile);
-        			FileOutputStream outStream = new FileOutputStream(outFile);
-        			 
-        			//通过available方法取得流的最大字符数
-        			byte[] inOutb = new byte[inStream.available()];
-        			 
-        			inStream.read(inOutb);  //读入流,保存在byte数组
-        			outStream.write(inOutb);  //写出流,保存在文件newdemo.txt中
-        			 
-        			inStream.close();
-        			outStream.close();
-        		} catch (Exception e) {
-        			// TODO Auto-generated catch block
-        			e.printStackTrace();
-        		}
-            	System.exit(0);
-            	//***********************************************************************
-            	
             	returnValue = ui.insert(user);
             	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
             }else if(methodString.equals("delete")){
@@ -143,7 +122,66 @@ public class Login extends HttpServlet {
             	paraList.add("ok");
             	user = ui.selectByPrimaryKey(user.gettUserId());
             	paraList.add(user);
-            }else{
+            }else if(methodString.equals("saveavatar")){
+            	if(System.getProperty("os.name").toLowerCase().contains("windows")){
+	            	pathname = Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+		            		.getProperty("windows.rootpicpath")
+		            		+System.getProperty("file.separator")+user.gettUserId()+System.getProperty("file.separator");
+            	}else{
+            		pathname = Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+		            		.getProperty("linux.rootpicpath")
+		            		+System.getProperty("file.separator")+user.gettUserId()+System.getProperty("file.separator");
+            	}
+            	
+            	String randomFileNameString = Util.genPasscode(10);
+            	user.settUserAvatar(pathname+randomFileNameString+"."+picTypeString);
+            	if(ui.updateByPrimaryKey(user)==0){
+            		paraList.add("noUser");
+            	}else{
+            		session.commit();
+            		
+            		File pathnameFile = new File(pathname);//保存在指定路径
+            		pathnameFile.mkdirs();
+            		
+            		if(long_buf.length/1024 > Long.valueOf(Util.getSysProper(getServletContext().
+							getRealPath(System.getProperty("file.separator"))).getProperty("avatar.size"))){
+            			paraList.add("picTooLarge");
+            		}else{
+						paraList.add("saveOk");
+	                    fos=new FileOutputStream(pathname+randomFileNameString+"."+picTypeString,true);   
+	                    fos.write(long_buf);   
+	                    fos.flush(); 
+	                    fos.close();
+            		}
+            	}
+            }else if(methodString.equals("getavatar")){
+            	pathname = ui.selectByPrimaryKey(user.gettUserId()).gettUserAvatar();
+            	File getFile = new File(pathname);
+            	if(getFile.exists()){
+            		paraList.add("ok");
+            		
+    	    		FileInputStream fis = new FileInputStream(new File(pathname)); 
+    	    		int filelong = fis.available(); 
+    	    		byte[] get_buf = new byte[filelong]; 
+    	    		fis.read(get_buf); 
+    	    		fis.close();
+    	    		
+            		paraList.add(get_buf);
+            	}else{
+            		paraList.add("error");
+            	}
+            }else if(methodString.equals("delavatar")){
+            	pathname = ui.selectByPrimaryKey(user.gettUserId()).gettUserAvatar();
+            	user.settUserAvatar("");//删除
+            	if(ui.updateByPrimaryKey(user)==0){
+            		paraList.add("noUser");
+            	}else{
+            		session.commit();
+            		File delFile = new File(pathname);
+            		delFile.delete();
+            		paraList.add("delOk");
+            	}
+        	}else{
             	paraList.add("error");
             }
             session.commit();

@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -39,7 +37,7 @@ public class test {
 		urlConn.setDoOutput(true);  
 	    urlConn.setDoInput(true);  
 	    urlConn.setUseCaches(false);  
-	    urlConn.setRequestProperty("Content-type","application/x-java-serialized-object");  
+	    urlConn.setRequestProperty("Content-type","application/octet-stream");//x-java-serialized-object");  
 	    urlConn.setRequestMethod("POST");  
 	    urlConn.connect();  
 	    
@@ -56,11 +54,28 @@ public class test {
 	    		user.settUserName("秦琼");
 	    		user.settUserRegtag(0);
 	    		paraList.add(user);
+	    	}else if(method.equals("saveavatar")){
 	    		
-	    		File picFile = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Koala.jpg");
-	    		System.out.println(picFile.isFile());
-	    		paraList.add(picFile);
+	    		FileInputStream fis = new FileInputStream(new File("D:\\Koala.jpg")); 
+	    		int filelong = fis.available(); 
+	    		byte[] long_buf = new byte[filelong]; 
+	    		fis.read(long_buf); 
+	    		fis.close();
 	    		
+	    		paraList.add(method);
+	    		user.settUserId(1);
+	    		paraList.add(user);
+	    		paraList.add(long_buf);
+	    		paraList.add("jpg");
+	    		
+	    	}else if(method.equals("delavatar")){
+	    		paraList.add(method);
+	    		user.settUserId(1);
+	    		paraList.add(user);
+	    	}else if(method.equals("getavatar")){
+	    		paraList.add(method);
+	    		user.settUserId(1);
+	    		paraList.add(user);
 	    	}else{
 	    		System.out.println(servName+"没有这种方法");
 	    		System.exit(0);
@@ -85,35 +100,15 @@ public class test {
 	    		T_accdata ad = new T_accdata();
 	    		ArrayList<T_accdata> uploadList = new ArrayList<T_accdata>();
 	    		
-	    		ad.settAccdataUserid(1);
-	    		ad.settAccdataValue(1.01);
-	    		ad.settAccdataDatatime(new Date());
-	    		uploadList.add(ad);
-	    		ad = new T_accdata();
-	    		ad.settAccdataUserid(1);
-	    		ad.settAccdataValue(1.02);
-	    		ad.settAccdataDatatime(new Date());
-	    		uploadList.add(ad);
-	    		ad = new T_accdata();
-	    		ad.settAccdataUserid(1);
-	    		ad.settAccdataValue(1.03);
-	    		ad.settAccdataDatatime(new Date());
-	    		uploadList.add(ad);
-	    		ad = new T_accdata();
-	    		ad.settAccdataUserid(1);
-	    		ad.settAccdataValue(1.04);
-	    		ad.settAccdataDatatime(new Date());
-	    		uploadList.add(ad);
-	    		ad = new T_accdata();
-	    		ad.settAccdataUserid(1);
-	    		ad.settAccdataValue(1.05);
-	    		ad.settAccdataDatatime(new Date());
-	    		uploadList.add(ad);
+	    		ad.settAccdataUserid(1);ad.settAccdataValue(1.01);ad.settAccdataDatatime(new Date());uploadList.add(ad);
+	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.02);ad.settAccdataDatatime(new Date());uploadList.add(ad);
+	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.03);ad.settAccdataDatatime(new Date());uploadList.add(ad);
+	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.04);ad.settAccdataDatatime(new Date());uploadList.add(ad);
+	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.05);ad.settAccdataDatatime(new Date());uploadList.add(ad);
 	    		
 	    		paraList.add("upload");
 	    		paraList.add(uploadList);
 	    	}
-	    	
 	    }else{
 	    	System.out.println("没有这种servlet");
 	    	System.exit(0);
@@ -144,6 +139,24 @@ public class test {
 	    		System.out.println(servName+"/"+method+"的执行结果：");
 	    		System.out.println("isSucceed="+isSucceed);
 	    	    System.out.println(user==null?"没有这个用户":user.gettUserName());
+	    	}else if(method.equals("saveavatar")){
+	    		
+	    		System.out.println(paraList.size());
+	    		
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    	}else if(method.equals("delavatar")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    	}else if(method.equals("getavatar")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		
+	    		byte[] get_buf = (byte[])paraList.get(1);
+	    		System.out.println("文件大小"+get_buf.length);
 	    	}
 	    }else if(servName.equals("passcode")){
 	    	if(method.equals("isvalid")){
@@ -173,36 +186,7 @@ public class test {
 
 	
 	public static void main(String[] args) {
-//		testCommunicate("local","login","add");
-		
-		System.out.println(System.getProperty("os.name").toLowerCase().contains("windows"));
-		
-//		File inFile = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Koala.jpg");
-//		File outFile = new File("D:\\011525.jpg");//保存在指定路径
-//		//创建流文件读入与写出类
-//		try {
-//			FileInputStream inStream;
-//			inStream = new FileInputStream(inFile);
-//			FileOutputStream outStream = new FileOutputStream(outFile);
-//			 
-//			//通过available方法取得流的最大字符数
-//			byte[] inOutb = new byte[inStream.available()];
-//			 
-//			inStream.read(inOutb);  //读入流,保存在byte数组
-//			outStream.write(inOutb);  //写出流,保存在文件newdemo.txt中
-//			 
-//			inStream.close();
-//			outStream.close();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-//		System.out.println(Util.getProper("sys_config.properties").getProperty("foo"));
-		
-//		Date date = new Date();
-//		System.out.println(date);
-//		System.out.println(new java.sql.Timestamp(date.getTime()));
+		testCommunicate("172","login","delavatar");
 		
 	}
 
