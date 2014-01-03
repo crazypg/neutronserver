@@ -9,8 +9,13 @@ NeutronServer
    输入：ArrayList类型   
    
       位置0为操作类型，分别有 add,delete,update,query；saveavatar,getavatar,delavatar  
-      位置1为一个T_user 对象 
-   
+      位置1
+         add,delete,update,query为一个T_user 对象
+      位置2
+         saveavatar为一个 byte[]
+      位置3
+         saveavatar为一个 string 类型的字符串，为图片类型，如"jpg"
+         
    返回：ArrayList类型   
    
       位置0为操作结果
