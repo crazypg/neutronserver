@@ -156,6 +156,8 @@ public class Login extends HttpServlet {
             	}
             }else if(methodString.equals("getavatar")){
             	pathname = ui.selectByPrimaryKey(user.gettUserId()).gettUserAvatar();
+            	System.out.println(pathname);
+            	picTypeString = pathname.split("\\.")[1];
             	File getFile = new File(pathname);
             	if(getFile.exists()){
             		paraList.add("ok");
@@ -167,6 +169,7 @@ public class Login extends HttpServlet {
     	    		fis.close();
     	    		
             		paraList.add(get_buf);
+            		paraList.add(picTypeString);
             	}else{
             		paraList.add("error");
             	}

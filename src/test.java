@@ -56,7 +56,7 @@ public class test {
 	    		paraList.add(user);
 	    	}else if(method.equals("saveavatar")){
 	    		
-	    		FileInputStream fis = new FileInputStream(new File("D:\\Koala.jpg")); 
+	    		FileInputStream fis = new FileInputStream(new File("C:\\Users\\crazypg\\Desktop\\ava.jpg")); 
 	    		int filelong = fis.available(); 
 	    		byte[] long_buf = new byte[filelong]; 
 	    		fis.read(long_buf); 
@@ -156,7 +156,7 @@ public class test {
 	    		System.out.println("isSucceed="+isSucceed);
 	    		
 	    		byte[] get_buf = (byte[])paraList.get(1);
-	    		System.out.println("文件大小"+get_buf.length);
+	    		System.out.println("文件大小："+get_buf.length+";文件类型："+(String)paraList.get(2));
 	    	}
 	    }else if(servName.equals("passcode")){
 	    	if(method.equals("isvalid")){
@@ -186,7 +186,7 @@ public class test {
 
 	
 	public static void main(String[] args) {
-		testCommunicate("172","login","delavatar");
+		testCommunicate("219","login","getavatar");
 		
 	}
 
