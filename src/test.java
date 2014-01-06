@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.mysql.jdbc.Blob;
 import com.neutron.server.persistence.model.T_accdata;
 import com.neutron.server.persistence.model.T_user;
 
@@ -62,6 +61,7 @@ public class test {
 	    		fis.read(long_buf); 	    		
 	    		fis.close();
 	    		user.settUserPicture(long_buf);
+	    		user.settUserAvatar("jpg");
 	    		
 	    		paraList.add(user);
 	    	}else if(method.equals("query")){ 
@@ -156,10 +156,12 @@ public class test {
 	    	    System.out.println(user==null?"没有这个用户":user.gettUserName());
 	    	    
 	    	    byte[] get_buf = (byte[])user.gettUserPicture();
-	    	    File file = new File("C:\\Users\\admin\\Desktop\\Oyeah.jpg");
+	    	    File file = new File("C:\\Users\\admin\\Desktop\\Oyeah."+user.gettUserAvatar());
 	    	    FileOutputStream foStream = new FileOutputStream(file);
 	    	    foStream.write(get_buf);
 	    	    foStream.close();
+	    	    
+	    	    
 	    	    
 	    	}else if(method.equals("saveavatar")){
 	    		
