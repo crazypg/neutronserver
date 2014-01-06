@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -12,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.mysql.jdbc.Blob;
 import com.neutron.server.persistence.model.T_accdata;
 import com.neutron.server.persistence.model.T_user;
 
@@ -51,9 +53,22 @@ public class test {
 	    if(servName.equals("login")){
 	    	if(method.equals("add")){
 	    		paraList.add(method);
-	    		user.settUserName("秦琼");
+	    		user.settUserName("武瞾");
 	    		user.settUserRegtag(0);
+	    		
+	    		FileInputStream fis = new FileInputStream(new File("C:\\Users\\admin\\Desktop\\images.jpg")); 
+	    		int filelong = fis.available(); 
+	    		byte[] long_buf = new byte[filelong]; 
+	    		fis.read(long_buf); 	    		
+	    		fis.close();
+	    		user.settUserPicture(long_buf);
+	    		
 	    		paraList.add(user);
+	    	}else if(method.equals("query")){ 
+	    		paraList.add(method);
+	    		user.settUserId(9);
+	    		paraList.add(user);
+	    		
 	    	}else if(method.equals("saveavatar")){
 	    		
 	    		FileInputStream fis = new FileInputStream(new File("D:\\Koala.jpg")); 
@@ -139,6 +154,13 @@ public class test {
 	    		System.out.println(servName+"/"+method+"的执行结果：");
 	    		System.out.println("isSucceed="+isSucceed);
 	    	    System.out.println(user==null?"没有这个用户":user.gettUserName());
+	    	    
+	    	    byte[] get_buf = (byte[])user.gettUserPicture();
+	    	    File file = new File("C:\\Users\\admin\\Desktop\\Oyeah.jpg");
+	    	    FileOutputStream foStream = new FileOutputStream(file);
+	    	    foStream.write(get_buf);
+	    	    foStream.close();
+	    	    
 	    	}else if(method.equals("saveavatar")){
 	    		
 	    		System.out.println(paraList.size());
@@ -186,7 +208,7 @@ public class test {
 
 	
 	public static void main(String[] args) {
-		testCommunicate("172","login","delavatar");
+		testCommunicate("local","login","query");
 		
 	}
 
