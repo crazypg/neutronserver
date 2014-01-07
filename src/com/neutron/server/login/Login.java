@@ -104,8 +104,13 @@ public class Login extends HttpServlet {
             	paraList.add("error");
             }else if(methodString.equals("add")){
             	paraList.add("ok");
-            	returnValue = ui.insert(user);
-            	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
+            	if(user.gettUserPicture()!=null && user.gettUserPicture().length/1024 > Long.valueOf(Util.getSysProper(getServletContext().
+						getRealPath(System.getProperty("file.separator"))).getProperty("avatar.size"))){
+        			paraList.add("picTooLarge");
+        		}else{
+                	returnValue = ui.insert(user);
+                	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
+        		}
             }else if(methodString.equals("delete")){
             	paraList.add("ok");
             	//先通过主键查出该条记录
