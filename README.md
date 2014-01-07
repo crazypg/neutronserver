@@ -8,7 +8,7 @@ NeutronServer
    描述：用户的注册和登陆    
    输入：ArrayList类型   
    
-      位置0为操作类型，分别有 add,delete,update,query；saveavatar,getavatar,delavatar  
+      位置0为操作类型，分别有 add,delete,update,updateWithBlob,query；saveavatar,getavatar,delavatar  
          关于add操作和avatar类操作，暂时保留avatar系列操作。t_user表增加blob列，可以直接存图片，
          读写方法可以参考test。需要注意的是，利用原avatar列做文件类型（add的时候需存入后缀名），读写的时候要注意。     
       位置1
