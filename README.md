@@ -10,7 +10,9 @@ NeutronServer
          对于头像图片大小，服务器端限制最大上限，但client端
    输入：ArrayList类型   
    
-      位置0为操作类型，分别有 add,delete,update,query；saveavatar,getavatar,delavatar  
+      位置0为操作类型，分别有 add,delete,update,updateWithBlob,query；saveavatar,getavatar,delavatar  
+         关于add操作和avatar类操作，暂时保留avatar系列操作。t_user表增加blob列，可以直接存图片，
+         读写方法可以参考test。需要注意的是，利用原avatar列做文件类型（add的时候需存入后缀名），读写的时候要注意。     
       位置1
          add,delete,update,query为一个T_user 对象
       位置2

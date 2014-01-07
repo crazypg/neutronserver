@@ -7,7 +7,7 @@ public class T_user implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -5940415710440299906L;
+	private static final long serialVersionUID = -7061139590725067593L;
 
 	private Integer tUserId;
 
@@ -36,6 +36,8 @@ public class T_user implements Serializable{
     private String tUserImei;
 
     private String tUserImsi;
+
+    private byte[] tUserPicture;
 
     public Integer gettUserId() {
         return tUserId;
@@ -147,5 +149,13 @@ public class T_user implements Serializable{
 
     public void settUserImsi(String tUserImsi) {
         this.tUserImsi = tUserImsi == null ? null : tUserImsi.trim();
+    }
+
+    public byte[] gettUserPicture() {
+        return tUserPicture;
+    }
+
+    public void settUserPicture(byte[] tUserPicture) {
+        this.tUserPicture = tUserPicture;
     }
 }

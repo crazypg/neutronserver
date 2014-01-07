@@ -93,7 +93,7 @@ public class Passcode extends HttpServlet {
             	T_userExample tExample = new T_userExample();
             	tExample.createCriteria().andTUserAreacodeEqualTo(user.gettUserAreacode())
             		.andTUserPhonenumberEqualTo(user.gettUserPhonenumber());
-            	java.util.List<T_user> resultList = ui.selectByExample(tExample);
+            	java.util.List<T_user> resultList = ui.selectByExampleWithBLOBs(tExample);
             	
             	if(resultList==null){
             		paraList.add("error");

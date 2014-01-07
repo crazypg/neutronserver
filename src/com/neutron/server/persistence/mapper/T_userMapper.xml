@@ -17,6 +17,9 @@
     <result column="t_user_imei" property="tUserImei" jdbcType="VARCHAR" />
     <result column="t_user_imsi" property="tUserImsi" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.neutron.server.persistence.model.T_user" extends="BaseResultMap" >
+    <result column="t_user_picture" property="tUserPicture" jdbcType="LONGVARBINARY" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -80,11 +83,31 @@
     T_USER_phonenumber, T_USER_passcode, t_user_passcode_timestamp, T_USER_areacode, 
     T_USER_deltag, T_USER_regdate, t_user_imei, t_user_imsi
   </sql>
+  <sql id="Blob_Column_List" >
+    t_user_picture
+  </sql>
   
   <select id="getLastInsertID" resultType="java.lang.Integer">
     select distinct last_insert_id() from neutron.t_user
   </select>
   
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.neutron.server.persistence.model.T_userExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neutron.server.persistence.model.T_userExample" >
     select
     <if test="distinct" >
@@ -100,9 +123,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from t_user
     where T_USER_id = #{tUserId,jdbcType=INTEGER}
   </select>
@@ -121,12 +146,14 @@
       T_USER_name, T_USER_gender, T_USER_birth, 
       T_USER_phonenumber, T_USER_passcode, t_user_passcode_timestamp, 
       T_USER_areacode, T_USER_deltag, T_USER_regdate, 
-      t_user_imei, t_user_imsi)
+      t_user_imei, t_user_imsi, t_user_picture
+      )
     values (#{tUserId,jdbcType=INTEGER}, #{tUserRegtag,jdbcType=INTEGER}, #{tUserAvatar,jdbcType=VARCHAR}, 
       #{tUserName,jdbcType=VARCHAR}, #{tUserGender,jdbcType=INTEGER}, #{tUserBirth,jdbcType=VARCHAR}, 
       #{tUserPhonenumber,jdbcType=VARCHAR}, #{tUserPasscode,jdbcType=VARCHAR}, #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP}, 
       #{tUserAreacode,jdbcType=VARCHAR}, #{tUserDeltag,jdbcType=VARCHAR}, #{tUserRegdate,jdbcType=DATE}, 
-      #{tUserImei,jdbcType=VARCHAR}, #{tUserImsi,jdbcType=VARCHAR})
+      #{tUserImei,jdbcType=VARCHAR}, #{tUserImsi,jdbcType=VARCHAR}, #{tUserPicture,jdbcType=LONGVARBINARY}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_user" >
     insert into t_user
@@ -173,6 +200,9 @@
       <if test="tUserImsi != null" >
         t_user_imsi,
       </if>
+      <if test="tUserPicture != null" >
+        t_user_picture,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tUserId != null" >
@@ -216,6 +246,9 @@
       </if>
       <if test="tUserImsi != null" >
         #{tUserImsi,jdbcType=VARCHAR},
+      </if>
+      <if test="tUserPicture != null" >
+        #{tUserPicture,jdbcType=LONGVARBINARY},
       </if>
     </trim>
   </insert>
@@ -270,7 +303,31 @@
       <if test="record.tUserImsi != null" >
         t_user_imsi = #{record.tUserImsi,jdbcType=VARCHAR},
       </if>
+      <if test="record.tUserPicture != null" >
+        t_user_picture = #{record.tUserPicture,jdbcType=LONGVARBINARY},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_user
+    set T_USER_id = #{record.tUserId,jdbcType=INTEGER},
+      T_USER_regtag = #{record.tUserRegtag,jdbcType=INTEGER},
+      T_USER_avatar = #{record.tUserAvatar,jdbcType=VARCHAR},
+      T_USER_name = #{record.tUserName,jdbcType=VARCHAR},
+      T_USER_gender = #{record.tUserGender,jdbcType=INTEGER},
+      T_USER_birth = #{record.tUserBirth,jdbcType=VARCHAR},
+      T_USER_phonenumber = #{record.tUserPhonenumber,jdbcType=VARCHAR},
+      T_USER_passcode = #{record.tUserPasscode,jdbcType=VARCHAR},
+      t_user_passcode_timestamp = #{record.tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      T_USER_areacode = #{record.tUserAreacode,jdbcType=VARCHAR},
+      T_USER_deltag = #{record.tUserDeltag,jdbcType=VARCHAR},
+      T_USER_regdate = #{record.tUserRegdate,jdbcType=DATE},
+      t_user_imei = #{record.tUserImei,jdbcType=VARCHAR},
+      t_user_imsi = #{record.tUserImsi,jdbcType=VARCHAR},
+      t_user_picture = #{record.tUserPicture,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -337,7 +394,28 @@
       <if test="tUserImsi != null" >
         t_user_imsi = #{tUserImsi,jdbcType=VARCHAR},
       </if>
+      <if test="tUserPicture != null" >
+        t_user_picture = #{tUserPicture,jdbcType=LONGVARBINARY},
+      </if>
     </set>
+    where T_USER_id = #{tUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.neutron.server.persistence.model.T_user" >
+    update t_user
+    set T_USER_regtag = #{tUserRegtag,jdbcType=INTEGER},
+      T_USER_avatar = #{tUserAvatar,jdbcType=VARCHAR},
+      T_USER_name = #{tUserName,jdbcType=VARCHAR},
+      T_USER_gender = #{tUserGender,jdbcType=INTEGER},
+      T_USER_birth = #{tUserBirth,jdbcType=VARCHAR},
+      T_USER_phonenumber = #{tUserPhonenumber,jdbcType=VARCHAR},
+      T_USER_passcode = #{tUserPasscode,jdbcType=VARCHAR},
+      t_user_passcode_timestamp = #{tUserPasscodeTimestamp,jdbcType=TIMESTAMP},
+      T_USER_areacode = #{tUserAreacode,jdbcType=VARCHAR},
+      T_USER_deltag = #{tUserDeltag,jdbcType=VARCHAR},
+      T_USER_regdate = #{tUserRegdate,jdbcType=DATE},
+      t_user_imei = #{tUserImei,jdbcType=VARCHAR},
+      t_user_imsi = #{tUserImsi,jdbcType=VARCHAR},
+      t_user_picture = #{tUserPicture,jdbcType=LONGVARBINARY}
     where T_USER_id = #{tUserId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.neutron.server.persistence.model.T_user" >

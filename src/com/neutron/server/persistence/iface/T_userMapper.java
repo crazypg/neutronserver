@@ -16,15 +16,21 @@ public interface T_userMapper {
 
     int insertSelective(T_user record);
 
+    List<T_user> selectByExampleWithBLOBs(T_userExample example);
+
     List<T_user> selectByExample(T_userExample example);
 
     T_user selectByPrimaryKey(Integer tUserId);
 
     int updateByExampleSelective(@Param("record") T_user record, @Param("example") T_userExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") T_user record, @Param("example") T_userExample example);
+
     int updateByExample(@Param("record") T_user record, @Param("example") T_userExample example);
 
     int updateByPrimaryKeySelective(T_user record);
+
+    int updateByPrimaryKeyWithBLOBs(T_user record);
 
     int updateByPrimaryKey(T_user record);
     
