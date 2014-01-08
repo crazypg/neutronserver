@@ -123,6 +123,11 @@ public class Login extends HttpServlet {
             	//先通过主键查出该条记录
             	returnValue = ui.updateByPrimaryKey(user);
             	paraList.add(returnValue);
+            }else if(methodString.equals("updateWithBlob")){
+            	paraList.add("ok");
+            	//先通过主键查出该条记录
+            	returnValue = ui.updateByPrimaryKeyWithBLOBs(user);
+            	paraList.add(returnValue);
             }else if(methodString.equals("query")){
             	paraList.add("ok");
             	user = ui.selectByPrimaryKey(user.gettUserId());
