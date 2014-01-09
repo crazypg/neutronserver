@@ -32,7 +32,7 @@ public class CronPerHour extends TimerTask{
 		
 		if (!isRunning) {
 			//TODO remember CHANGE the exe TIME!!!!!!!
-			if (0 == cal.get(Calendar.MINUTE)%5) {	//exec per Hour
+			if (0 == cal.get(Calendar.MINUTE)%5 && cal.get(Calendar.SECOND) < 11) {	//exec per Hour
 				isRunning = true;
 				context.log(Calendar.getInstance().getTime()+":定时任务开始执行");
 				

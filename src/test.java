@@ -10,12 +10,15 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
-import com.neutron.server.common.CalModel;
 import com.neutron.server.persistence.model.T_accdata;
+import com.neutron.server.persistence.model.T_rmr;
 import com.neutron.server.persistence.model.T_user;
 
 public class test {
@@ -138,8 +141,24 @@ public class test {
 	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.04);ad.settAccdataDatatime(new Date());uploadList.add(ad);
 	    		ad = new T_accdata();ad.settAccdataUserid(1);ad.settAccdataValue(1.05);ad.settAccdataDatatime(new Date());uploadList.add(ad);
 	    		
-	    		paraList.add("upload");
+	    		paraList.add(method);
 	    		paraList.add(uploadList);
+	    	}else if(method.equals("getrmrbynum")){
+	    		paraList.add(method);
+	    		paraList.add(18);
+	    		paraList.add(20);
+	    	}else if(method.equals("getrmrbytime")){
+	    		paraList.add(method);
+	    		paraList.add(18);
+	    		DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    		try {
+					paraList.add(fmt.parse("2014-01-08 21:30:00"));
+					paraList.add(fmt.parse("2014-01-09 21:30:20"));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		
 	    	}
 	    }else{
 	    	System.out.println("没有这种servlet");
@@ -235,6 +254,24 @@ public class test {
 	    		isSucceed = (String)paraList.get(0);
 	    		System.out.println(servName+"/"+method+"的执行结果：");
 	    		System.out.println("isSucceed="+isSucceed);
+	    	}else if(method.equals("getrmrbynum")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		
+	    		ArrayList<T_rmr> rmrList = (ArrayList<T_rmr>) paraList.get(1);
+	    		for(Iterator<T_rmr> iterator = rmrList.iterator();iterator.hasNext();){
+	    			System.out.println(iterator.next().gettRmrDatetime());
+	    		}
+	    	}else if(method.equals("getrmrbytime")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		
+	    		ArrayList<T_rmr> rmrList = (ArrayList<T_rmr>) paraList.get(1);
+	    		for(Iterator<T_rmr> iterator = rmrList.iterator();iterator.hasNext();){
+	    			System.out.println(iterator.next().gettRmrDatetime());
+	    		}
 	    	}
 	    }
 	    
@@ -253,19 +290,12 @@ public class test {
 	
 	public static void main(String[] args) {
 
-//		testCommunicate("local","passcode","getpasscode");
-//		testCommunicate("172","login","query");
+		testCommunicate("local","data","getrmrbytime");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();
 //		cmCalModel.processRmr();
 		
-		System.out.println(0%15);
-		System.out.println(14%15);
-		System.out.println(15%15);
-		System.out.println(30%15);
-		System.out.println(46%15);
-		System.out.println(59%15);
 	}
 
 }

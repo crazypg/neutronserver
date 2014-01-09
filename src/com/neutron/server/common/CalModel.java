@@ -69,6 +69,7 @@ public class CalModel {
 		}
 		
 		batchSession.commit();
+		accDataList = null;
 	}
 	
 	public void processRmr(){
@@ -92,6 +93,7 @@ public class CalModel {
 		}
 		
 		batchSession.commit();
+		rmr_indexList = null;
 	}
 	
 }
