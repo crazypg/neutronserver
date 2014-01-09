@@ -11,8 +11,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
+import com.neutron.server.common.CalModel;
 import com.neutron.server.persistence.model.T_accdata;
 import com.neutron.server.persistence.model.T_user;
 
@@ -250,8 +252,20 @@ public class test {
 
 	
 	public static void main(String[] args) {
-		testCommunicate("219","login","getavatar");
-		//		testCommunicate("172","login","query");
+
+//		testCommunicate("local","passcode","getpasscode");
+//		testCommunicate("172","login","query");
+		
+//		CalModel cmCalModel = new CalModel();
+//		cmCalModel.processRmrIndex();
+//		cmCalModel.processRmr();
+		
+		System.out.println(0%15);
+		System.out.println(14%15);
+		System.out.println(15%15);
+		System.out.println(30%15);
+		System.out.println(46%15);
+		System.out.println(59%15);
 	}
 
 }

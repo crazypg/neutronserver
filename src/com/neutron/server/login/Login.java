@@ -45,18 +45,27 @@ public class Login extends HttpServlet {
 //		response.getOutputStream().println("OK");
 		
 		response.setContentType("text/html;charset=UTF-8"); 
+		response.getWriter().println("<br/>");
 		response.getWriter().println("doGet::Only For TEST perpose");
+		response.getWriter().println("<br/>");
 		response.getWriter().println(System.getProperty("os.name"));
-				
+		response.getWriter().println("<br/>");
+		response.getWriter().println(Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))
+	            		.getProperty("passcodetimeout"));
+		
 		SqlSession session = DbConfig.getSqlSessionFactroy().openSession();
 		
 		try{
 			 T_userMapper ui = session.getMapper(T_userMapper.class);
 		     T_user tu = ui.selectByPrimaryKey(1);
+		     response.getWriter().println("<br/>");
 		     response.getWriter().println(tu.gettUserName());
+		     response.getWriter().println("<br/>");
 		     response.getWriter().println(tu.gettUserBirth());
 		     tu = ui.selectByPrimaryKey(2);
+		     response.getWriter().println("<br/>");
 		     response.getWriter().println(tu.gettUserName());
+		     response.getWriter().println("<br/>");
 		     response.getWriter().println(tu.gettUserBirth());
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -122,6 +131,11 @@ public class Login extends HttpServlet {
             	paraList.add("ok");
             	//先通过主键查出该条记录
             	returnValue = ui.updateByPrimaryKey(user);
+            	paraList.add(returnValue);
+            }else if(methodString.equals("updateWithBlob")){
+            	paraList.add("ok");
+            	//先通过主键查出该条记录
+            	returnValue = ui.updateByPrimaryKeyWithBLOBs(user);
             	paraList.add(returnValue);
             }else if(methodString.equals("query")){
             	paraList.add("ok");
