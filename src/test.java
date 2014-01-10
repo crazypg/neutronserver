@@ -20,6 +20,7 @@ import java.util.Iterator;
 import com.neutron.server.persistence.model.T_accdata;
 import com.neutron.server.persistence.model.T_rmr;
 import com.neutron.server.persistence.model.T_user;
+import com.neutron.server.persistence.model.T_userExample;
 
 public class test {
 
@@ -73,8 +74,15 @@ public class test {
 	    	}else if(method.equals("query")){ 
 	    		
 	    		paraList.add(method);
-	    		user.settUserId(21);
+	    		user.settUserId(2);
 	    		paraList.add(user);
+	    		
+	    	}else if(method.equals("queryWithCriteria")){
+	    		
+	    		paraList.add(method);
+	    		T_userExample userExample = new T_userExample();
+	    		userExample.createCriteria().andTUserIdEqualTo(2);
+	    		paraList.add(userExample);
 	    		
 	    	}else if(method.equals("saveavatar")){
 	    		
@@ -199,8 +207,17 @@ public class test {
 	    	    File file = new File("C:\\Users\\admin\\Desktop\\loginQuery."+user.gettUserAvatar());
 	    	    FileOutputStream foStream = new FileOutputStream(file);
 	    	    foStream.write(get_buf);
-	    	    foStream.close();	  
+	    	    foStream.close();
 	    	    
+	    	}else if(method.equals("queryWithCriteria")){
+	    		
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		
+	    		ArrayList<T_user> users = (ArrayList<T_user>) paraList.get(1);
+	    		System.out.println("取到了"+users.size()+"个用户");
+	    		
 	    	}else if(method.equals("saveavatar")){
 	    		
 	    		System.out.println(paraList.size());
@@ -227,6 +244,7 @@ public class test {
 	    }else if(servName.equals("passcode")){
 	    	
 	    	if(method.equals("isvalid")){
+	    		
 	    		isSucceed = (String)paraList.get(0);
 	    		System.out.println(servName+"/"+method+"的执行结果：");
 	    		System.out.println("isSucceed="+isSucceed);
@@ -290,7 +308,8 @@ public class test {
 	
 	public static void main(String[] args) {
 
-		testCommunicate("local","data","getrmrbytime");
+		testCommunicate("local","login","queryWithCriteria");
+		testCommunicate("local","login","query");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();

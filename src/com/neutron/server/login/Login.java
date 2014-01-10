@@ -22,6 +22,7 @@ import com.neutron.server.common.DbConfig;
 import com.neutron.server.common.Util;
 import com.neutron.server.persistence.iface.T_userMapper;
 import com.neutron.server.persistence.model.T_user;
+import com.neutron.server.persistence.model.T_userExample;
 
 /**
  * Servlet implementation class Login
@@ -87,17 +88,24 @@ public class Login extends HttpServlet {
             ObjectInputStream ois = new ObjectInputStream(in);
             paraList = (ArrayList<Serializable>)(ois.readObject());  
             String methodString = (String)paraList.get(0);
+            T_userExample userExample = new T_userExample();
             
-            T_user user = (T_user)paraList.get(1);
+            T_user user = null;
             
             String pathname = "";
             byte[] long_buf = null;
         	FileOutputStream fos=null; //for receive file
         	String picTypeString = "";
         	
-            if(methodString!=null && methodString.equals("saveavatar")){
+            if(methodString==null){
+            	
+            }else if(methodString.equals("saveavatar")){
             	long_buf = (byte[])paraList.get(2);
             	picTypeString = (String)paraList.get(3);
+            }else if(methodString.equals("queryWithCriteria")){
+            	userExample = (T_userExample) paraList.get(1);
+            }else{
+            	user = (T_user)paraList.get(1);
             }
             
         	
@@ -141,6 +149,10 @@ public class Login extends HttpServlet {
             	paraList.add("ok");
             	user = ui.selectByPrimaryKey(user.gettUserId());
             	paraList.add(user);
+            }else if(methodString.equals("queryWithCriteria")){
+            	paraList.add("ok");
+            	ArrayList<T_user> users = (ArrayList<T_user>) ui.selectByExample(userExample);
+            	paraList.add(users);
             }else if(methodString.equals("saveavatar")){
             	if(System.getProperty("os.name").toLowerCase().contains("windows")){
 	            	pathname = Util.getSysProper(getServletContext().getRealPath(System.getProperty("file.separator")))

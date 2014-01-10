@@ -1,12 +1,18 @@
 package com.neutron.server.persistence.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class T_userExample {
-    protected String orderByClause;
+public class T_userExample implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6498366849997596402L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 
@@ -65,8 +71,13 @@ public class T_userExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
-        protected List<Criterion> criteria;
+    protected abstract static class GeneratedCriteria implements Serializable{
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1045513357648037346L;
+		
+		protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
@@ -1063,15 +1074,25 @@ public class T_userExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends GeneratedCriteria implements Serializable{
 
-        protected Criteria() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3166396011723394739L;
+
+		protected Criteria() {
             super();
         }
     }
 
-    public static class Criterion {
-        private String condition;
+    public static class Criterion implements Serializable{
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 8723192861742893911L;
+
+		private String condition;
 
         private Object value;
 
