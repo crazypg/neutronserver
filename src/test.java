@@ -154,7 +154,7 @@ public class test {
 	    	}else if(method.equals("getrmrbynum")){
 	    		paraList.add(method);
 	    		paraList.add(18);
-	    		paraList.add(20);
+	    		paraList.add(24);
 	    	}else if(method.equals("getrmrbytime")){
 	    		paraList.add(method);
 	    		paraList.add(18);
@@ -308,8 +308,7 @@ public class test {
 	
 	public static void main(String[] args) {
 
-		testCommunicate("local","login","queryWithCriteria");
-		testCommunicate("local","login","query");
+		testCommunicate("219","data","getrmrbynum");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();

@@ -5,66 +5,108 @@ NeutronServer
 ###提供服务（所有servlet不处理get提交，只处理post提交）
 
 ###1、[ip]/login : 提供登陆服务
-   描述：用户的注册和登陆    
-         对于头像图片类型，服务器端只是记录，不做限制；   
-         对于头像图片大小，服务器端限制最大上限，但client端
-   输入：ArrayList类型   
+   描述：用户的注册和登陆       
+         对于头像图片类型，服务器端只是记录，不做限制；      
+         对于头像图片大小，服务器端限制最大上限，但应由client端限制   
    
-      位置0为操作类型，分别有 add,delete,update,updateWithBlob,query；saveavatar,getavatar,delavatar  
-         关于add操作和avatar类操作，暂时保留avatar系列操作。t_user表增加blob列，可以直接存图片，
-         读写方法可以参考test。需要注意的是，利用原avatar列做文件类型（add的时候需存入后缀名），读写的时候要注意。     
-      位置1
-         add,delete,update,query为一个T_user 对象
-      位置2
-         saveavatar为一个 byte[]
-      位置3
-         saveavatar为一个 string 类型的字符串，为图片类型，如"jpg"
-         
-   返回：ArrayList类型   
+   add方法：   
+   输入：ArrayList类型，位置0 String "add" ; 位置1 T_user   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值      
+      
+   delete方法：   
+   输入：ArrayList类型，位置0 String "delete" ; 位置1 T_user，至少应对userid赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
+   备注：并不是真正删除，而是将delreg置1   
    
-      位置0为操作结果
-         add,delete,update,query，getavatar: ok 或者 error
-         saveavatar:noUser,picTooLarge,saveOk
-         delavatar:noUser,delOk   
-      位置1为返回值1 
-         add:返回值为刚插入的数据项的自增ID   
-         delete,update:返回值为sql执行返回值，一般无意义；   
-         query:返回值为T_user对象，无为null   
-         getavatar:返回值为 byte[]
-         saveavatar,delavatar:无返回值
-      位置2为返回值2         
-         getavatar:返回值为 String 的图片类型，如"jpg"
+   update方法：   
+   输入：ArrayList类型，位置0 String "update" ; 位置1 T_user，至少应对userid赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
+   备注：该方法不更新Blob类型列   
+   
+   updateWithBlob方法：   
+   输入：ArrayList类型，位置0 String "updateWithBlob" ; 位置1 T_user，至少应对userid赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
+   备注：该方法所有列   
+   
+   query方法：      
+   输入：ArrayList类型，位置0 String "query" ; 位置1 T_user，至少应对userid赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 T_user   
+   
+   queryWithCriteria方法：   
+   输入：ArrayList类型，位置0 String "queryWithCriteria" ; 位置1 T_userExample   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 ArrayLIst<T_user>   
+   备注：该方法返回Blob类型列
+   
+   saveavatar方法：
+   输入：ArrayList类型，
+         位置0 String "saveavatar" ;  
+         位置1 String T_user，至少应对userid   
+         位置2 byte[] 图片   
+         位置3 为图片类型，如"jpg"   		  
+   返回：ArrayList类型，位置0 String noUser,picTooLarge,saveOk,error
+
+   getavatar方法：
+   输入：ArrayList类型，位置0 String "getavatar" ; 位置1 T_user，至少应对userid赋值
+   返回：ArrayList类型，位置0 String ok,error，位置1 Byte[]类型 picture，位置2 String 后缀名
+   
+   delavatar方法：
+   输入：ArrayList类型，位置0 String "delavatar" ; 位置1 T_user，至少应对userid赋值
+   返回：ArrayList类型，位置0 String noUser,delOk,error
 
 ###2、[ip]/passcode : 提供passcode相关服务   
-   描述：60分钟内passcode不变，过期重新生成。   
-   输入：ArrayList类型   
+   描述：60分钟内passcode不变，过期重新生成。  
    
-      位置0为操作类型，分别为 isvalid,getpasscode,login   
-      位置1为一个T_user 对象   
-         isvalid需要非空的 userid 和 passcode
-         getpasscode需要非空的 areacode 和 phonenumber
-         login需要非空的 areacode , phonenumber 和 passcode
-      
-   返回：ArrayList类型   
+   isvalid方法：
+   输入：ArrayList类型，位置0 String "isvalid" ; 位置1 T_user，至少应对userid，passcode赋值
+   输出：ArrayList类型，位置0 String valid（验证成功）,novalid（验证不成功）
    
-      位置0为操作结果
-         对isvalid,有 valid（验证成功）,novalid（验证不成功）
-         对getpasscode,有 new , registered , moreThanOneResult
-         对login,有 ok , para Error , noResult , moreThanOneResult
-      位置1为返回值   
-         isvalid 操作没有返回值
-         getpasscode,login 返回值为 T_user 对象   
-         
+   getpasscode方法：
+   输入：ArrayList类型，
+         位置0 String "getpasscode" ; 
+         位置1 T_user，至少应对areacode，phonenumber赋值
+   输出：ArrayList类型，位置0 String new,registered,moreThanOneResult，位置1 T_user
+       
+   login方法：
+   输入：ArrayList类型，位置0 String "login" ; 
+         位置1 T_user，至少应对areacode , phonenumber 和 passcode赋值
+   输出：ArrayList类型，位置0 String  ok,para Error,noResult,moreThanOneResult
          
 ###3、[ip]/data : 提供数据存储相关服务   
-   描述：用于client上传本机数据。   
-   输入：ArrayList类型   
+   描述：用于client上传本机数据。  
    
-      位置0为操作类型，分别为 upload
-      位置1为一个ArrayList 对象   
-         对于upload操作，该ArrayList所含元素是T_accdata，除t_accdata_id外都需要赋值
+   upload方法：
+   输入：ArrayList类型，位置0 String "upload" ; 
+         位置1 ArrayList<T_accdata> 元素T_accdata，除t_accdata_id外都需要赋值
+   输出：ArrayList类型，位置0 String  ok,error
+    
+   getrmrbynum方法：
+   输入：ArrayList类型，位置0 String "getrmrbynum" ; 
+         位置1 int userid；位置2 int num
+   输出：ArrayList类型，位置0 String  ok,input error,error；位置1 ArrayList<T_rmr>
+   备注：取userid的最近num个rmr数据
+       
+   getrmrbydate方法：
+   输入：ArrayList类型，位置0 String "getrmrbydate" ; 
+         位置1 int userid；位置2 data1；位置3 data2
+   输出：ArrayList类型，位置0 String  ok,input error，error；位置1 ArrayList<T_rmr>
+   备注：取userid的date1与date2之间的数据       
+   
+###4、[ip]/sns : 提供用户间相互关系的服务
+
+   add方法：   
+   输入：ArrayList类型，位置0 String "add" ; 位置1 T_relation
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值      
       
-   返回：ArrayList类型   
+   delete方法：   
+   输入：ArrayList类型，位置0 String "delete" ; 位置1 T_relation，至少应对id赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
+   备注：并不是真正删除，而是将delreg置1   
    
-      位置0为操作结果
-         对upload,有 ok,error
+   update方法：   
+   输入：ArrayList类型，位置0 String "update" ; 位置1 T_relation，至少应对id赋值   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
+   
+   queryWithCriteria方法：   
+   输入：ArrayList类型，位置0 String "queryWithCriteria" ; 位置1 T_relationExample   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 ArrayLIst<T_relation>   
+   
