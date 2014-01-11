@@ -6,6 +6,8 @@ import java.util.TimerTask;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.apache.log4j.Logger;
+
 public class CronPerHour extends TimerTask{
 
 	public CronPerHour() {
@@ -14,9 +16,11 @@ public class CronPerHour extends TimerTask{
 	
 //    private static final int C_SCHEDULE_HOUR = 10;// 这个代表10点钟的时候执行任务
     private static boolean isRunning = false;
-    private ServletContext context = null;
+    @SuppressWarnings("unused")
+	private ServletContext context = null;
     private CalModel cmModel = new CalModel();
     
+    static Logger logger = Logger.getLogger(CronPerHour.class);
     
     public CronPerHour(ServletContext context) {
         this.context = context;
@@ -32,9 +36,11 @@ public class CronPerHour extends TimerTask{
 		
 		if (!isRunning) {
 			//TODO remember CHANGE the exe TIME!!!!!!!
-			if (0 == cal.get(Calendar.MINUTE)%5 && cal.get(Calendar.SECOND) < 11) {	//exec per Hour
+			if (0 == cal.get(Calendar.MINUTE)%5 && cal.get(Calendar.SECOND) <= 10) {	//exec per Hour
+//			if (cal.get(Calendar.SECOND)%10 == 0) {	//exec per Hour
 				isRunning = true;
-				context.log(Calendar.getInstance().getTime()+":定时任务开始执行");
+//				context.log(Calendar.getInstance().getTime()+":定时任务开始执行");
+				logger.info("定时任务开始执行");
 				
 //				System.out.println(Util.getProper(new File(this.getClass().getResource("").getPath())+"").getProperty("avatar.size"));
 				//执行计算
@@ -42,10 +48,12 @@ public class CronPerHour extends TimerTask{
 				cmModel.processRmr();
 				
 				isRunning = false;
-				context.log(Calendar.getInstance().getTime()+":定时任务执行结束");
+//				context.log(Calendar.getInstance().getTime()+":定时任务执行结束");
+				logger.info("定时任务执行结束");
 			}
 		} else {
-			context.log("上一次任务执行还未结束");
+//			context.log("上一次任务执行还未结束");
+			logger.info("上一次任务执行还未结束");
 		}
 	}
 	

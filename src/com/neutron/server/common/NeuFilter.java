@@ -10,14 +10,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 public class NeuFilter implements Filter {
 
 	private FilterConfig filterConfig=null;
     private String encoding=null;
      
+    static Logger logger = Logger.getLogger(NeuFilter.class);
+    
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		System.out.println("Filter 初始化");
+		logger.info("Filter 初始化");
 		this.filterConfig=arg0;
         this.encoding=filterConfig.getInitParameter("encoding");
 	}
@@ -31,7 +35,7 @@ public class NeuFilter implements Filter {
         	req.setCharacterEncoding(encoding);  
         
 		HttpServletRequest request = (HttpServletRequest) req;
-		System.out.println("拦截 URI=" + request.getRequestURI());
+		logger.info("拦截 URI=" + request.getRequestURI());
 		
 		chain.doFilter(req, res);
 	}
@@ -40,7 +44,7 @@ public class NeuFilter implements Filter {
 	public void destroy() {
 		this.encoding=null;
         this.filterConfig=null;
-		System.out.println("Filter 结束");
+        logger.info("Filter 结束");
 	}
 
 }

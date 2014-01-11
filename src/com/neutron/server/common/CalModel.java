@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.neutron.server.persistence.iface.T_accdataMapper;
 import com.neutron.server.persistence.iface.T_rmrMapper;
@@ -20,6 +21,8 @@ import com.neutron.server.persistence.model.T_rmr_indexExample;
 
 public class CalModel {
 
+	static Logger logger = Logger.getLogger(CalModel.class);
+	
 	static SqlSession session = DbConfig.getSqlSessionFactroy().openSession();
 	static SqlSession batchSession = DbConfig.getSqlSessionFactroy().openSession(ExecutorType.BATCH, true);
 	static T_userMapper userMapper = session.getMapper(T_userMapper.class);
@@ -48,6 +51,7 @@ public class CalModel {
 	
 	//TODO 是否添加根据用户分组
 	public void processRmrIndex(){
+		logger.info("分析RmrIndex数据......");
 		//get all T_accdata data
 		ArrayList<T_accdata> accDataList = (ArrayList<T_accdata>) accdataMapper.selectByExample(new T_accdataExample());
 		ArrayList<Integer> userIDs = new ArrayList<Integer>();
@@ -59,6 +63,7 @@ public class CalModel {
 		}
 		
 		if(userIDs.size()==0) return;
+		logger.info("分析"+userIDs.size()+"个用户的acc数据" +accDataList.size()+ "条...");
 		
 		for(Iterator<Integer> itr = userIDs.iterator(); itr.hasNext();){
 			userid = itr.next();
@@ -73,6 +78,7 @@ public class CalModel {
 	}
 	
 	public void processRmr(){
+		logger.info("分析Rmr数据......");
 		ArrayList<T_rmr_index> rmr_indexList = (ArrayList<T_rmr_index>) rmrIndexMapper.selectByExample(new T_rmr_indexExample());
 		ArrayList<Integer> userIDs = new ArrayList<Integer>();
 		
@@ -83,6 +89,7 @@ public class CalModel {
 		}
 		
 		if(userIDs.size()==0) return;
+		logger.info("分析"+userIDs.size()+"个用户的rmr数据" +rmr_indexList.size()+ "条...");
 		
 		for(Iterator<Integer> itr = userIDs.iterator(); itr.hasNext();){
 			userid = itr.next();
