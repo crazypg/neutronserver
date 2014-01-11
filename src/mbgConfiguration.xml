@@ -45,7 +45,7 @@
     </javaClientGenerator>
     
     <!-- 要对那些数据表进行生成操作，必须要有一个. -->
-    <table schema="neutron" tableName="t_rmr_index" domainObjectName="T_rmr_index" 
+    <table schema="neutron" tableName="t_relation" domainObjectName="T_relation" 
         enableCountByExample="true" enableUpdateByExample="true"
         enableDeleteByExample="true" enableSelectByExample="true"
         selectByExampleQueryId="true">

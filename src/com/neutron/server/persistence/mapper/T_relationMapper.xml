@@ -7,10 +7,91 @@
     <result column="T_RELATION_salve_id" property="tRelationSalveId" jdbcType="INTEGER" />
     <result column="T_RELATION_relation" property="tRelationRelation" jdbcType="INTEGER" />
     <result column="T_RELATION_deltag" property="tRelationDeltag" jdbcType="VARCHAR" />
+    <result column="t_relation_confirmtag" property="tRelationConfirmtag" jdbcType="VARCHAR" />
+    <result column="t_relation_confirmcontent" property="tRelationConfirmcontent" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    T_RELATION_id, T_RELATION_master_id, T_RELATION_salve_id, T_RELATION_relation, T_RELATION_deltag
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
   </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    T_RELATION_id, T_RELATION_master_id, T_RELATION_salve_id, T_RELATION_relation, T_RELATION_deltag, 
+    t_relation_confirmtag, t_relation_confirmcontent
+  </sql>
+  
+  <select id="getLastInsertID" resultType="java.lang.Integer">
+    select distinct last_insert_id() from neutron.t_relation
+  </select>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neutron.server.persistence.model.T_relationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -21,11 +102,19 @@
     delete from t_relation
     where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByExample" parameterType="com.neutron.server.persistence.model.T_relationExample" >
+    delete from t_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.neutron.server.persistence.model.T_relation" >
     insert into t_relation (T_RELATION_id, T_RELATION_master_id, T_RELATION_salve_id, 
-      T_RELATION_relation, T_RELATION_deltag)
+      T_RELATION_relation, T_RELATION_deltag, t_relation_confirmtag, 
+      t_relation_confirmcontent)
     values (#{tRelationId,jdbcType=INTEGER}, #{tRelationMasterId,jdbcType=INTEGER}, #{tRelationSalveId,jdbcType=INTEGER}, 
-      #{tRelationRelation,jdbcType=INTEGER}, #{tRelationDeltag,jdbcType=VARCHAR})
+      #{tRelationRelation,jdbcType=INTEGER}, #{tRelationDeltag,jdbcType=VARCHAR}, #{tRelationConfirmtag,jdbcType=VARCHAR}, 
+      #{tRelationConfirmcontent,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.neutron.server.persistence.model.T_relation" >
     insert into t_relation
@@ -45,6 +134,12 @@
       <if test="tRelationDeltag != null" >
         T_RELATION_deltag,
       </if>
+      <if test="tRelationConfirmtag != null" >
+        t_relation_confirmtag,
+      </if>
+      <if test="tRelationConfirmcontent != null" >
+        t_relation_confirmcontent,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tRelationId != null" >
@@ -62,8 +157,62 @@
       <if test="tRelationDeltag != null" >
         #{tRelationDeltag,jdbcType=VARCHAR},
       </if>
+      <if test="tRelationConfirmtag != null" >
+        #{tRelationConfirmtag,jdbcType=VARCHAR},
+      </if>
+      <if test="tRelationConfirmcontent != null" >
+        #{tRelationConfirmcontent,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.neutron.server.persistence.model.T_relationExample" resultType="java.lang.Integer" >
+    select count(*) from t_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_relation
+    <set >
+      <if test="record.tRelationId != null" >
+        T_RELATION_id = #{record.tRelationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tRelationMasterId != null" >
+        T_RELATION_master_id = #{record.tRelationMasterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tRelationSalveId != null" >
+        T_RELATION_salve_id = #{record.tRelationSalveId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tRelationRelation != null" >
+        T_RELATION_relation = #{record.tRelationRelation,jdbcType=INTEGER},
+      </if>
+      <if test="record.tRelationDeltag != null" >
+        T_RELATION_deltag = #{record.tRelationDeltag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tRelationConfirmtag != null" >
+        t_relation_confirmtag = #{record.tRelationConfirmtag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tRelationConfirmcontent != null" >
+        t_relation_confirmcontent = #{record.tRelationConfirmcontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_relation
+    set T_RELATION_id = #{record.tRelationId,jdbcType=INTEGER},
+      T_RELATION_master_id = #{record.tRelationMasterId,jdbcType=INTEGER},
+      T_RELATION_salve_id = #{record.tRelationSalveId,jdbcType=INTEGER},
+      T_RELATION_relation = #{record.tRelationRelation,jdbcType=INTEGER},
+      T_RELATION_deltag = #{record.tRelationDeltag,jdbcType=VARCHAR},
+      t_relation_confirmtag = #{record.tRelationConfirmtag,jdbcType=VARCHAR},
+      t_relation_confirmcontent = #{record.tRelationConfirmcontent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.neutron.server.persistence.model.T_relation" >
     update t_relation
     <set >
@@ -79,6 +228,12 @@
       <if test="tRelationDeltag != null" >
         T_RELATION_deltag = #{tRelationDeltag,jdbcType=VARCHAR},
       </if>
+      <if test="tRelationConfirmtag != null" >
+        t_relation_confirmtag = #{tRelationConfirmtag,jdbcType=VARCHAR},
+      </if>
+      <if test="tRelationConfirmcontent != null" >
+        t_relation_confirmcontent = #{tRelationConfirmcontent,jdbcType=VARCHAR},
+      </if>
     </set>
     where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
   </update>
@@ -87,7 +242,9 @@
     set T_RELATION_master_id = #{tRelationMasterId,jdbcType=INTEGER},
       T_RELATION_salve_id = #{tRelationSalveId,jdbcType=INTEGER},
       T_RELATION_relation = #{tRelationRelation,jdbcType=INTEGER},
-      T_RELATION_deltag = #{tRelationDeltag,jdbcType=VARCHAR}
+      T_RELATION_deltag = #{tRelationDeltag,jdbcType=VARCHAR},
+      t_relation_confirmtag = #{tRelationConfirmtag,jdbcType=VARCHAR},
+      t_relation_confirmcontent = #{tRelationConfirmcontent,jdbcType=VARCHAR}
     where T_RELATION_id = #{tRelationId,jdbcType=INTEGER}
   </update>
 </mapper>
