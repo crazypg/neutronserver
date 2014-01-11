@@ -100,7 +100,7 @@ public class Data extends HttpServlet {
             	}else{
 	            	rmrExample.createCriteria().andTRmrUseridEqualTo(userid);
 	            	rmrExample.setOrderByClause(" t_rmr_datetime desc ");
-	            	rmrExample.setlimitClause(" 3 ");
+	            	rmrExample.setlimitClause(num);
 	            	
 	            	ArrayList<T_rmr> rmrList = (ArrayList<T_rmr>) rmrMapper.selectByExample(rmrExample);
 	            	

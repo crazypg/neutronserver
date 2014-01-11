@@ -6,7 +6,7 @@ import java.util.List;
 
 public class T_rmrExample {
     protected String orderByClause;
-    protected String limitClause;
+    protected int limitClause;
     
     protected boolean distinct;
 
@@ -24,11 +24,11 @@ public class T_rmrExample {
         return orderByClause;
     }
 
-    public void setlimitClause(String limitClause) {
+    public void setlimitClause(int limitClause) {
         this.limitClause = limitClause;
     }
 
-    public String getlimitClause() {
+    public int getlimitClause() {
         return limitClause;
     }
     
@@ -70,7 +70,7 @@ public class T_rmrExample {
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
-        limitClause = null;
+        limitClause = 0;
         distinct = false;
     }
 
