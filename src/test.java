@@ -290,7 +290,7 @@ public class test {
 	
 	public static void main(String[] args) {
 
-		testCommunicate("local","data","getrmrbytime");
+		testCommunicate("219","data","getrmrbytime");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();
