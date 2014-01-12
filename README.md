@@ -91,7 +91,7 @@ NeutronServer
    输出：ArrayList类型，位置0 String  ok,input error，error；位置1 ArrayList<T_rmr>   
    备注：取userid的date1与date2之间的数据          
    
-###4、[ip]/sns : 提供用户间相互关系的服务   
+###4、[ip]/relation : 提供用户间相互关系的服务   
 
    add方法：      
    输入：ArrayList类型，位置0 String "add" ; 位置1 T_relation   

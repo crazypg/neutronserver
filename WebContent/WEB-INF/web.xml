@@ -40,9 +40,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <servlet-name>Data</servlet-name>
     <servlet-class>com.neutron.server.data.Data</servlet-class>
   </servlet>
-    <servlet>
+  <servlet>
     <servlet-name>Relation</servlet-name>
-    <servlet-class>com.neutron.server.sns.relation</servlet-class>
+    <servlet-class>com.neutron.server.sns.Relation</servlet-class>
   </servlet>
   
   <servlet-mapping>

@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import com.neutron.server.persistence.model.T_accdata;
+import com.neutron.server.persistence.model.T_relation;
 import com.neutron.server.persistence.model.T_rmr;
 import com.neutron.server.persistence.model.T_user;
 import com.neutron.server.persistence.model.T_userExample;
@@ -168,6 +169,14 @@ public class test {
 				}
 	    		
 	    	}
+	    }else if(servName.equals("relation")){
+	    	if(method.equals("add")){
+	    		paraList.add(method);
+	    		T_relation relation = new T_relation();
+	    		relation.settRelationMasterId(1);
+	    		relation.settRelationSalveId(2);
+	    		paraList.add(relation);
+	    	}
 	    }else{
 	    	System.out.println("没有这种servlet");
 	    	System.exit(0);
@@ -291,6 +300,12 @@ public class test {
 	    			System.out.println(iterator.next().gettRmrDatetime());
 	    		}
 	    	}
+	    }else if(servName.equals("relation")){
+	    	if(method.equals("add")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    	}
 	    }
 	    
 	    ois.close();
@@ -308,7 +323,7 @@ public class test {
 	
 	public static void main(String[] args) {
 
-		testCommunicate("219","data","getrmrbynum");
+		testCommunicate("172","relation","add");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();
