@@ -6,7 +6,7 @@ public class T_relation implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -1168112958458106822L;
+	private static final long serialVersionUID = 6729128095944399947L;
 
 	private Integer tRelationId;
 
@@ -17,6 +17,10 @@ public class T_relation implements Serializable{
     private Integer tRelationRelation;
 
     private String tRelationDeltag;
+
+    private String tRelationConfirmtag;
+
+    private String tRelationConfirmcontent;
 
     public Integer gettRelationId() {
         return tRelationId;
@@ -56,5 +60,21 @@ public class T_relation implements Serializable{
 
     public void settRelationDeltag(String tRelationDeltag) {
         this.tRelationDeltag = tRelationDeltag == null ? null : tRelationDeltag.trim();
+    }
+
+    public String gettRelationConfirmtag() {
+        return tRelationConfirmtag;
+    }
+
+    public void settRelationConfirmtag(String tRelationConfirmtag) {
+        this.tRelationConfirmtag = tRelationConfirmtag == null ? null : tRelationConfirmtag.trim();
+    }
+
+    public String gettRelationConfirmcontent() {
+        return tRelationConfirmcontent;
+    }
+
+    public void settRelationConfirmcontent(String tRelationConfirmcontent) {
+        this.tRelationConfirmcontent = tRelationConfirmcontent == null ? null : tRelationConfirmcontent.trim();
     }
 }

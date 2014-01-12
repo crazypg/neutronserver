@@ -151,7 +151,7 @@ public class Login extends HttpServlet {
             	paraList.add(user);
             }else if(methodString.equals("queryWithCriteria")){
             	paraList.add("ok");
-            	ArrayList<T_user> users = (ArrayList<T_user>) ui.selectByExample(userExample);
+            	ArrayList<T_user> users = (ArrayList<T_user>) ui.selectByExampleWithBLOBs(userExample);
             	paraList.add(users);
             }else if(methodString.equals("saveavatar")){
             	if(System.getProperty("os.name").toLowerCase().contains("windows")){
