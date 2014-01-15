@@ -76,12 +76,26 @@ public class Relation extends HttpServlet {
             	returnValue = relationMapper.insert(relation);
             	paraList.add(relationMapper.getLastInsertID());//取得刚插入的ID
             }else if(methodString.equals("delete")){
-            	paraList.add("ok");
             	//先通过主键查出该条记录
-            	relation = relationMapper.selectByPrimaryKey(relation.gettRelationId());
-            	relation.settRelationDeltag("1");
-            	returnValue = relationMapper.updateByPrimaryKey(relation);
-            	paraList.add(returnValue);
+            	relationExample.createCriteria().andTRelationMasterIdEqualTo(relation.gettRelationMasterId()).
+            		andTRelationSalveIdEqualTo(relation.gettRelationSalveId());
+            	ArrayList<T_relation> relations = 
+            			(ArrayList<T_relation>) relationMapper.selectByExample(relationExample);
+            	
+            	if(relations!=null){
+            		if(relations.size() == 1){
+            			paraList.add("delOk");
+            			relation = relations.get(0);
+            			relation.settRelationDeltag("1");
+                    	returnValue = relationMapper.updateByPrimaryKey(relation);
+                    	paraList.add(returnValue);
+            		}else{
+            			paraList.add("moreThanOneToDelete");
+            		}
+            	}else{
+            		paraList.add("error");
+            	}
+            	
             }else if(methodString.equals("update")){
             	paraList.add("ok");
             	//先通过主键查出该条记录

@@ -176,6 +176,8 @@ public class test {
 	    		relation.settRelationMasterId(1);
 	    		relation.settRelationSalveId(2);
 	    		paraList.add(relation);
+	    	}else if(method.equals("delete")){
+	    		
 	    	}
 	    }else{
 	    	System.out.println("没有这种servlet");
