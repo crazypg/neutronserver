@@ -100,11 +100,26 @@ public class Relation extends HttpServlet {
             }else if(methodString.equals("updateWithMS")){
             	relationExample.clear();
             	relationExample.createCriteria().andTRelationMasterIdEqualTo(relation.gettRelationMasterId()).
-        			andTRelationSalveIdEqualTo(relation.gettRelationSalveId());
+        			andTRelationSalveIdEqualTo(relation.gettRelationSalveId()).andTRelationDeltagEqualTo("0");
+            	ArrayList<T_relation> relations = 
+            			(ArrayList<T_relation>) relationMapper.selectByExample(relationExample);
             	
-    			paraList.add("ok");
-    			returnValue = relationMapper.updateByExample(relation, relationExample);
-            	paraList.add(returnValue);
+            	if(relations!=null){
+            		if(relations.size() == 1){
+            			paraList.add("ok");
+            			relation = relations.get(0);
+            			returnValue = relationMapper.updateByExample(relation, relationExample);
+                    	paraList.add(returnValue);
+            		}else{
+            			paraList.add("moreThanOneToDelete");
+            		}
+            	}else{
+            		paraList.add("error");
+            	}
+            	
+            	
+            	
+    			
             }else if(methodString.equals("update")){
             	paraList.add("ok");
             	returnValue = relationMapper.updateByPrimaryKey(relation);
