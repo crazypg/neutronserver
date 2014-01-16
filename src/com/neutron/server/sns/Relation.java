@@ -77,6 +77,7 @@ public class Relation extends HttpServlet {
             	paraList.add(relationMapper.getLastInsertID());//取得刚插入的ID
             }else if(methodString.equals("delete")){
             	//先通过主键查出该条记录
+            	relationExample.clear();
             	relationExample.createCriteria().andTRelationMasterIdEqualTo(relation.gettRelationMasterId()).
             		andTRelationSalveIdEqualTo(relation.gettRelationSalveId());
             	ArrayList<T_relation> relations = 
@@ -96,9 +97,16 @@ public class Relation extends HttpServlet {
             		paraList.add("error");
             	}
             	
+            }else if(methodString.equals("updateWithMS")){
+            	relationExample.clear();
+            	relationExample.createCriteria().andTRelationMasterIdEqualTo(relation.gettRelationMasterId()).
+        			andTRelationSalveIdEqualTo(relation.gettRelationSalveId());
+            	
+    			paraList.add("ok");
+    			returnValue = relationMapper.updateByExample(relation, relationExample);
+            	paraList.add(returnValue);
             }else if(methodString.equals("update")){
             	paraList.add("ok");
-            	//先通过主键查出该条记录
             	returnValue = relationMapper.updateByPrimaryKey(relation);
             	paraList.add(returnValue);
             }else if(methodString.equals("queryWithCriteria")){
