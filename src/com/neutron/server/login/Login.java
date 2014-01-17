@@ -120,11 +120,11 @@ public class Login extends HttpServlet {
             if(methodString==null){
             	paraList.add("error");
             }else if(methodString.equals("add")){
-            	paraList.add("ok");
             	if(user.gettUserPicture()!=null && user.gettUserPicture().length/1024 > Long.valueOf(Util.getSysProper(getServletContext().
 						getRealPath(System.getProperty("file.separator"))).getProperty("avatar.size"))){
         			paraList.add("picTooLarge");
         		}else{
+        			paraList.add("ok");
                 	returnValue = ui.insert(user);
                 	paraList.add(ui.getLastInsertID());//取得刚插入的user的ID
         		}
