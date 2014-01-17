@@ -83,7 +83,7 @@ public class Relation extends HttpServlet {
             	ArrayList<T_relation> relations = 
             			(ArrayList<T_relation>) relationMapper.selectByExample(relationExample);
             	
-            	if(relations!=null){
+            	if(relations!=null&&relations.size()>0){
             		if(relations.size() == 1){
             			paraList.add("delOk");
             			relation = relations.get(0);
@@ -104,10 +104,10 @@ public class Relation extends HttpServlet {
             	ArrayList<T_relation> relations = 
             			(ArrayList<T_relation>) relationMapper.selectByExample(relationExample);
             	
-            	if(relations!=null){
+            	if(relations!=null&&relations.size()>0){
             		if(relations.size() == 1){
             			paraList.add("ok");
-            			relation = relations.get(0);
+            			relation.settRelationId(relations.get(0).gettRelationId());
             			returnValue = relationMapper.updateByExample(relation, relationExample);
                     	paraList.add(returnValue);
             		}else{
@@ -116,7 +116,6 @@ public class Relation extends HttpServlet {
             	}else{
             		paraList.add("error");
             	}
-            	
             	
             	
     			
