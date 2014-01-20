@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.neutron.server.common.DbConfig;
 import com.neutron.server.common.Util;
@@ -38,6 +39,8 @@ public class Login extends HttpServlet {
         super();
     }
 
+    static Logger logger = Logger.getLogger(Login.class);
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

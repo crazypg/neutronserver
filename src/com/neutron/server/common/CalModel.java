@@ -74,6 +74,7 @@ public class CalModel {
 		}
 		
 		batchSession.commit();
+		accDataList.clear();
 		accDataList = null;
 	}
 	
@@ -100,6 +101,7 @@ public class CalModel {
 		}
 		
 		batchSession.commit();
+		rmr_indexList.clear();
 		rmr_indexList = null;
 	}
 	
