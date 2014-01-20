@@ -72,6 +72,12 @@ public class test {
 	    		
 	    		paraList.add(user);
 	    		
+	    	}else if(method.equals("update")){
+	    		paraList.add(method);
+	    		user.settUserId(6);
+	    		user.settUserName("秦琼他爹");
+	    		paraList.add(user);
+	    		
 	    	}else if(method.equals("query")){ 
 	    		
 	    		paraList.add(method);
@@ -220,6 +226,11 @@ public class test {
 	    	    foStream.write(get_buf);
 	    	    foStream.close();
 	    	    
+	    	}else if(method.equals("update")){
+	    		isSucceed = (String)paraList.get(0);
+	    		System.out.println(servName+"/"+method+"的执行结果：");
+	    		System.out.println("isSucceed="+isSucceed);
+	    		
 	    	}else if(method.equals("queryWithCriteria")){
 	    		
 	    		isSucceed = (String)paraList.get(0);
@@ -325,7 +336,7 @@ public class test {
 	
 	public static void main(String[] args) {
 
-		testCommunicate("172","relation","add");
+		testCommunicate("local","login","update");
 		
 //		CalModel cmCalModel = new CalModel();
 //		cmCalModel.processRmrIndex();

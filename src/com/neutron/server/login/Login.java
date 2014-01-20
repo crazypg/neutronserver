@@ -107,7 +107,6 @@ public class Login extends HttpServlet {
             }else{
             	user = (T_user)paraList.get(1);
             }
-            
         	
           //置空，作返回值用
             paraList.clear();
@@ -137,14 +136,12 @@ public class Login extends HttpServlet {
             	paraList.add(returnValue);
             }else if(methodString.equals("update")){
             	paraList.add("ok");
-            	//先通过主键查出该条记录
-            	returnValue = ui.updateByPrimaryKey(user);
+            	returnValue = ui.updateByPrimaryKeySelective(user);
             	paraList.add(returnValue);
-            }else if(methodString.equals("updateWithBlob")){
-            	paraList.add("ok");
-            	//先通过主键查出该条记录
-            	returnValue = ui.updateByPrimaryKeyWithBLOBs(user);
-            	paraList.add(returnValue);
+//            }else if(methodString.equals("updateWithBlob")){
+//            	paraList.add("ok");
+//            	returnValue = ui.updateByPrimaryKeyWithBLOBs(user);
+//            	paraList.add(returnValue);
             }else if(methodString.equals("query")){
             	paraList.add("ok");
             	user = ui.selectByPrimaryKey(user.gettUserId());
