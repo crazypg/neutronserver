@@ -20,13 +20,8 @@ NeutronServer
    
    update方法：   
    输入：ArrayList类型，位置0 String "update" ; 位置1 T_user，至少应对userid赋值   
-   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
-   备注：该方法不更新Blob类型列   
-   
-   updateWithBlob方法：   
-   输入：ArrayList类型，位置0 String "updateWithBlob" ; 位置1 T_user，至少应对userid赋值   
-   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值   
-   备注：该方法所有列   
+   返回：ArrayList类型，位置0 String ok 或者 error；位置1 sql执行返回值  
+   备注：只更新T_user中不为空的项 
    
    query方法：      
    输入：ArrayList类型，位置0 String "query" ; 位置1 T_user，至少应对userid赋值   
