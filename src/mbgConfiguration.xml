@@ -6,9 +6,9 @@
 <generatorConfiguration>
   
   <!-- 配置mysql 驱动jar包路径.用了绝对路径 -->
-  <classPathEntry location="D:\git-reps\NeutronServer\WebContent\WEB-INF\lib\mysql-connector-java-5.1.28-bin.jar" />
+  <classPathEntry location="D:\git-reps\WebArch\WebContent\WEB-INF\lib\mysql-connector-java-5.1.28-bin.jar" />
 
-  <context id="neutron_mysql_tables" targetRuntime="MyBatis3">
+  <context id="webarch_mysql_tables" targetRuntime="MyBatis3">
   
     <!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
     <commentGenerator>
@@ -29,23 +29,23 @@
     </javaTypeResolver>
     
     <!-- 数据表对应的model 层  -->
-    <javaModelGenerator targetPackage="com.neutron.server.persistence.model" targetProject="src">
+    <javaModelGenerator targetPackage="com.webarch.persistence.model" targetProject="src">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
     
     <!-- sql mapper 隐射配置文件 -->
-    <sqlMapGenerator targetPackage="com.neutron.server.persistence.mapper"  targetProject="src">
+    <sqlMapGenerator targetPackage="com.webarch.persistence.mapper"  targetProject="src">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
     
     <!-- 在ibatis2 中是dao层，但在mybatis3中，其实就是mapper接口 -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.neutron.server.persistence.iface"  targetProject="src">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.webarch.persistence.iface"  targetProject="src">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
     
     <!-- 要对那些数据表进行生成操作，必须要有一个. -->
-    <table schema="neutron" tableName="t_relation" domainObjectName="T_relation" 
+    <table schema="neutron" tableName="t_user" domainObjectName="T_user" 
         enableCountByExample="true" enableUpdateByExample="true"
         enableDeleteByExample="true" enableSelectByExample="true"
         selectByExampleQueryId="true">

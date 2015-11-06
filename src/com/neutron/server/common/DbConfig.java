@@ -8,9 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.neutron.server.persistence.iface.T_userMapper;
-import com.neutron.server.persistence.model.T_user;
-
 public class DbConfig {
 
 	/**
@@ -91,11 +88,11 @@ public class DbConfig {
 //			        System.out.println(sys.getT_SYSTEM_value());
 			        
 			 
-			    T_userMapper ui = session.getMapper(T_userMapper.class);
-		        T_user tu = ui.selectByPrimaryKey(1);
-		        System.out.println(tu.gettUserName());
-			    System.out.println(tu.gettUserBirth());
-			        
+//			    T_userMapper ui = session.getMapper(T_userMapper.class);
+//		        T_user tu = ui.selectByPrimaryKey(1);
+//		        System.out.println(tu.gettUserName());
+//			    System.out.println(tu.gettUserBirth());
+//			        
 		        } finally {
 		        session.close();
 		 }

@@ -7,7 +7,7 @@ public class T_accdata implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -8384678687325500773L;
+	
 
 	private Integer tAccdataId;
 
